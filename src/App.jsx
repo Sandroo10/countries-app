@@ -4,14 +4,7 @@ import Hero from './Hero';
 import CountryCard from './CountryCard';
 import './App.css';
 
-interface Country {
-  name: string;
-  image: string;
-  population: number;
-  capital: string;
-}
-
-const countries: Country[] = [
+const countries = [
   {
     name: 'Japan',
     image: '../src/assets/japan.jfif',
@@ -32,17 +25,17 @@ const countries: Country[] = [
   }
 ];
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <div>
       <Header />
       <div className="main-content">
-      <Hero />
-      <div className="card-container">
-        {countries.map((country, index) => (
-          <CountryCard key={index} country={country} />
-        ))}
-      </div>
+        <Hero />
+        <div className="card-container">
+          {countries.map((country, index) => (
+            <CountryCard key={index} country={country} />
+          ))}
+        </div>
       </div>
     </div>
   );
