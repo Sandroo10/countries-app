@@ -1,13 +1,11 @@
-/* App.css */
 .card-container {
   display: flex;
-  justify-content: space-around; /* Evenly distributes cards across the container */
+  justify-content: space-around; 
   align-items: center;
   margin: 20px;
-  flex-wrap: nowrap; /* Prevent cards from wrapping to a new row */
-  gap: 20px; /* Adds space between cards */
+  flex-wrap: nowrap; 
+  gap: 20px; 
 }
-
 body {
   font-family: Arial, sans-serif;
   margin: 0;
