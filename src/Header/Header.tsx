@@ -1,13 +1,13 @@
 import React from 'react';
-import './Header.css';
+import styles from './Header.module.css';
 
-const Header = () => {
+const Header: React.FC = () => {
   return (
-    <header className="header">
-      <div className="header-left">
+    <header className={styles.header}>
+      <div className={styles.headerLeft}>
         <h1>CoolestSite</h1>
       </div>
-      <div className="header-right">
+      <div className={styles.headerRight}>
         <button>Home</button>
         <button>Menu</button>
         <button>Contact</button>
