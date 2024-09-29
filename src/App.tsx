@@ -1,32 +1,27 @@
 import React from 'react';
-import Header from './Header/Header.tsx';
-import Hero from './Hero/Hero.tsx';
-import CountryCard from './Card/CountryCard/CountryCard.tsx';
-import CountryImage from './Card/CountryImage/CountryImage.tsx';
-import CountryDetails from './Card/CountryDetails/CountryDetails.tsx';
-import { countries } from './Card/data/Countries.ts';
+import Layout from 'src/components/Layout/Layout';
+import CountryCard from 'src/components/Card/CountryCard/CountryCard';
+import CountryImage from 'src/components/Card/CountryImage/CountryImage';
+import CountryDetails from 'src/components/Card/CountryDetails/CountryDetails';
+import { countries } from 'src/data/Countries';
 import './App.css';
 
 const App: React.FC = () => {
   return (
-    <div>
-      <Header />
-      <div className="main-content">
-        <Hero />
-        <div className="cardContainer">
-          {countries.map((country, index) => (
-            <CountryCard key={index}>
-              <CountryImage image={country.image} name={country.name} />
-              <CountryDetails 
-                name={country.name} 
-                capital={country.capital} 
-                population={country.population} 
-              />
-            </CountryCard>
-          ))}
-        </div>
+    <Layout>
+      <div className="cardContainer">
+        {countries.map((country, index) => (
+          <CountryCard key={index}>
+            <CountryImage image={country.image} name={country.name} />
+            <CountryDetails
+              name={country.name}
+              capital={country.capital}
+              population={country.population}
+            />
+          </CountryCard>
+        ))}
       </div>
-    </div>
+    </Layout>
   );
 };
 
