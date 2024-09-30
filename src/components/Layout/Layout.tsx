@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from 'components/Header/Header'; 
-import Hero from 'components/Hero/Hero';
-import './Layout.css'; 
+import Header from '#/Header/Header'; 
+import Hero from '#/Hero/Hero';
+import { PropsWithChildren } from 'react';
 
 const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
