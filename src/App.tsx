@@ -8,7 +8,7 @@ const About = lazy(() => import('./components/About/About'));
 const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<h1 style={{display: 'flex' , justifyContent: 'center', alignItems: 'center'}}>Loading...</h1>}>
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<HeroCountry />} />
