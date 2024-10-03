@@ -1,0 +1,35 @@
+.footer {
+  background-color: #fff;
+  color: #333;
+  text-align: center;
+  padding: 20px 0;
+  width: 100%;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  margin-top: 15px;
+  height: 100px;
+}
+
+.contactInfo {
+  margin-bottom: 10px;
+}
+
+.socialMedia {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.socialIcon {
+  transition: opacity 0.3s;
+  height: 25px;
+}
+
+.social-icon:hover {
+  opacity: 0.7;
+}
+
+.copyright {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #666;
+}

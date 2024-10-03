@@ -1,27 +1,23 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import Layout from '#/Layout/Layout';
-import CountryCard from '#/Card/CountryCard/CountryCard';
-import CountryImage from '#/Card/CountryImage/CountryImage';
-import CountryDetails from '#/Card/CountryDetails/CountryDetails';
-import { countries } from '@/data/Countries';
-import './App.css';
+import NotFound from './components/NotFound/NotFound';
+const HeroCountry = lazy(() => import('./components/HeroCountry/HeroCountry'));
+const About = lazy(() => import('./components/About/About'));
 
 const App: React.FC = () => {
   return (
-    <Layout>
-      <div className="cardContainer">
-        {countries.map((country, index) => (
-          <CountryCard key={index}>
-            <CountryImage image={country.image} name={country.name} />
-            <CountryDetails
-              name={country.name}
-              capital={country.capital}
-              population={country.population}
-            />
-          </CountryCard>
-        ))}
-      </div>
-    </Layout>
+    <BrowserRouter>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<HeroCountry />} />
+            <Route path="about" element={<About />} />
+          </Route>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
   );
 };
 

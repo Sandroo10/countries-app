@@ -7,13 +7,3 @@ body {
 div {
   padding: 10px;
 }
-.cardContainer {
-  display: flex;
-  justify-content: center; 
-  align-items: center;
-  margin: 20px;
-  flex-wrap: wrap; 
-  gap: 50px; 
-}
-
-

@@ -1,14 +1,16 @@
 import React from 'react';
 import Header from '#/Header/Header'; 
-import Hero from '#/Hero/Hero';
-import { PropsWithChildren } from 'react';
+import { Outlet } from 'react-router-dom'; 
+import Footer from '#/Footer/Footer';
 
-const Layout: React.FC<PropsWithChildren> = ({ children }) => {
+const Layout: React.FC = () => {
   return (
     <div className="layout">
       <Header />
-      <Hero />
-      <main>{children}</main>
+      <main>
+        <Outlet /> 
+      </main>
+      <Footer/>
     </div>
   );
 };
