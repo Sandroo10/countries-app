@@ -2,8 +2,8 @@ import React, { Suspense, lazy } from 'react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import Layout from '#/Layout/Layout';
 import NotFound from './components/NotFound/NotFound';
+import About from './components/About/About';
 const HeroCountry = lazy(() => import('./components/HeroCountry/HeroCountry'));
-const About = lazy(() => import('./components/About/About'));
 
 const App: React.FC = () => {
   return (
