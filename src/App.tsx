@@ -1,22 +1,28 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense } from 'react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import Layout from '#/Layout/Layout';
-import NotFound from './components/NotFound/NotFound';
-import About from './components/About/About';
-const HeroCountry = lazy(() => import('./components/HeroCountry/HeroCountry'));
+import NotFound from '#/NotFound/NotFound';
+import About from '#/About/About';
+import HeroCountry from '#/HeroCountry/HeroCountry';
+import CountryPage from '#/CountryPage/CountryPage';
+import Contact from '#/Contact/Contact';
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <Suspense fallback={<h1 style={{display: 'flex' , justifyContent: 'center', alignItems: 'center'}}>Loading...</h1>}>
         <Routes>
+
           <Route element={<Layout />}>
-            <Route path="/" element={<HeroCountry />} />
+            <Route path="/" element={
+              <Suspense fallback={<h1 style={{display: 'flex' , justifyContent: 'center', alignItems: 'center', marginTop:'100px'}}>Loading...</h1>}>
+                <HeroCountry />
+                </Suspense> } />
             <Route path="about" element={<About />} />
+            <Route path="/:id" element={<CountryPage />} />
+            <Route path="contact" element={<Contact />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </Suspense>
     </BrowserRouter>
   );
 };

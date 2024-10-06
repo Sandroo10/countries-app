@@ -1,6 +1,8 @@
+import { lazy } from "react";
 import React from 'react';
-import Hero from '#/Hero/Hero'; 
-import CountryCard from '#/Card/CountryCard/CountryCard';
+const Hero = lazy(() => import('@/components/Hero/Hero'));
+const CountryCard = lazy(() => import('@/components/Card/CountryCard/CountryCard'));
+
 
 
 const HeroCountry: React.FC = () => {
