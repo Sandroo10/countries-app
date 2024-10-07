@@ -1,15 +1,14 @@
 import React from 'react';
-import { useParams } from 'react-router-dom'; 
+import { Navigate, useParams } from 'react-router-dom'; 
 import { countryPageData } from '@/data/CountryPageData';
 import styles from './CountryPage.module.css';
-import NotFound from '../NotFound/NotFound';
 
 const CountryPage: React.FC = () => {
   const { id } = useParams<{ id: string }>(); 
   const country = countryPageData.find((c) => c.id === Number(id)); 
 
   if (!country) {
-    return <NotFound />;
+    return <Navigate to="*" />;
   }
 
   return (

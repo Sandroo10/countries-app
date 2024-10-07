@@ -1,11 +1,11 @@
 import React, { Suspense } from 'react';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import Layout from '#/Layout/Layout';  
-import NotFound from '#/NotFound/NotFound';  
-import About from '#/About/About';  
-import HeroCountry from '#/HeroCountry/HeroCountry';
-import CountryPage from '#/CountryPage/CountryPage';
-import Contact from '#/Contact/Contact';
+import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
+import Layout from '@/components/Elements/Layout/Layout';  
+import NotFound from '@/components/Pages/NotFound/NotFound';  
+import About from '@/components/Pages/About/About';  
+import HeroCountry from '@/components/Elements/HeroCountry/HeroCountry';
+import CountryPage from '@/components/Pages/CountryPage/CountryPage';
+import Contact from '@/components/Pages/Contact/Contact';
 
 const App: React.FC = () => {
   return (
@@ -24,7 +24,8 @@ const App: React.FC = () => {
           <Route path="contact" element={<Contact />} />
           <Route path=":id" element={<CountryPage />} />
         </Route>
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<Navigate to="/404" />} />
+        <Route path="/404" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

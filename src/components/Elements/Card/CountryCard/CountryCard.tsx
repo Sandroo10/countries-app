@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; 
 import styles from './CountryCard.module.css';
-import CountryImage from '#/Card/CountryImage/CountryImage';
-import CountryDetails from '#/Card/CountryDetails/CountryDetails';
+import CountryImage from '@/components/Elements/Card/CountryImage/CountryImage';
+import CountryDetails from '@/components/Elements/Card/CountryDetails/CountryDetails';
 import { countries } from '@/data/Countries';
 
 const CountryCard: React.FC = () => {
