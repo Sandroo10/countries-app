@@ -4,6 +4,7 @@ export interface Country {
     image: string;
     population: number;
     capital: string;
+    likes: number;
   }
   
   export const countries: Country[] = [
@@ -13,6 +14,7 @@ export interface Country {
       image: '../src/assets/japan.jfif',
       population: 126300000,
       capital: 'Tokyo',
+      likes: 187,
     },
     {
       id: 2,
@@ -20,6 +22,7 @@ export interface Country {
       image: '../src/assets/france.jfif', 
       population: 67390000,
       capital: 'Paris',
+      likes: 187,
     },
     {
       id:3,
@@ -27,5 +30,6 @@ export interface Country {
       image: '../src/assets/brazil.jfif', 
       population: 212600000,
       capital: 'Brasília',
+      likes: 13,
     }
   ];

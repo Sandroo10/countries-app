@@ -3,9 +3,10 @@ import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
 import Layout from '@/components/Elements/Layout/Layout';  
 import NotFound from '@/components/Pages/NotFound/NotFound';  
 import About from '@/components/Pages/About/About';  
-import HeroCountry from '@/components/Elements/HeroCountry/HeroCountry';
-import CountryPage from '@/components/Pages/CountryPage/CountryPage';
+import HeroCountry from '@/components/Pages/HeroCountry/HeroCountry';
+import CountryPage from '@/components/Elements/CountryPage/CountryPage';
 import Contact from '@/components/Pages/Contact/Contact';
+import List from './components/Pages/List/List';
 
 const App: React.FC = () => {
   return (
@@ -22,6 +23,7 @@ const App: React.FC = () => {
           />
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
+          <Route path="list" element={<List />} />
           <Route path=":id" element={<CountryPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/404" />} />

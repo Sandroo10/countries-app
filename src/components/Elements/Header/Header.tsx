@@ -10,7 +10,7 @@ const Header: React.FC = () => {
       </div>
       <div className={styles.headerRight}>
         <Link to="/" className={styles.linkButton}>Home</Link>
-        <Link to="/menu" className={styles.linkButton}>Menu</Link>
+        <Link to="/list" className={styles.linkButton}>List</Link>
         <Link to="/about" className={styles.linkButton}>About</Link>
         <Link to="/contact" className={styles.linkButton}>Contact Us</Link>
       </div>
