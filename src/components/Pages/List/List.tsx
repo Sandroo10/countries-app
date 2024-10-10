@@ -37,32 +37,26 @@ const List: React.FC = () => {
     <div className={styles.container}>
       <h1>Countries List</h1>
       <button onClick={toggleSortByLikes} className={styles.sortButton}>
-        {sortByLikes === 'asc'
-          ? 'Sort by Likes (Descending)'
-          : sortByLikes === 'desc'
-          ? 'Clear Sort'
-          : 'Sort by Likes (Ascending)'}
+        {sortByLikes === 'asc' && 'Sort by Likes (Descending)'}
+        {sortByLikes === 'desc' && 'Clear Sort'}
+        {!sortByLikes && 'Sort by Likes (Ascending)'}
       </button>
-
+  
       <div className={styles.countriesGrid}>
-        {sortedCountries.length > 0 ? (
-          sortedCountries.map((country) => (
-            <div key={country.id} className={styles.countryCard}>
-              <img src={country.image} alt={country.name} className={styles.countryImage} />
-              <h2>{country.name}</h2>
-              <p>Population: {country.population}</p>
-              <p>Capital: {country.capital}</p>
-              <button onClick={() => handleLike(country.id)} className={styles.likeButton}>
-                Like ({country.likes})
-              </button>
-            </div>
-          ))
-        ) : (
-          <p>No countries to display.</p>
-        )}
+        {sortedCountries.map((country) => (
+          <div key={country.id} className={styles.countryCard}>
+            <img src={country.image} alt={country.name} className={styles.countryImage} />
+            <h2>{country.name}</h2>
+            <p>Population: {country.population}</p>
+            <p>Capital: {country.capital}</p>
+            <button onClick={() => handleLike(country.id)} className={styles.likeButton}>
+              Like ({country.likes})
+            </button>
+          </div>
+        ))}
       </div>
     </div>
-  );
+  );  
 };
 
 export default List;
