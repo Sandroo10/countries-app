@@ -1,11 +1,12 @@
-export interface Country {
-    id: number;
-    name: string;
-    image: string;
-    population: number;
-    capital: string;
-    likes: number;
-  }
+export type Country = {
+  id: number;
+  name: string;
+  population: number;
+  capital: string;
+  likes: number;
+  image: string;
+  isDeleted: boolean;
+};
   
   export const countries: Country[] = [
     {
@@ -15,6 +16,7 @@ export interface Country {
       population: 126300000,
       capital: 'Tokyo',
       likes: 187,
+      isDeleted: false
     },
     {
       id: 2,
@@ -23,6 +25,7 @@ export interface Country {
       population: 67390000,
       capital: 'Paris',
       likes: 187,
+      isDeleted: false
     },
     {
       id:3,
@@ -31,5 +34,6 @@ export interface Country {
       population: 212600000,
       capital: 'Brasília',
       likes: 13,
+      isDeleted: false
     }
   ];

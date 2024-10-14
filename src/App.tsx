@@ -4,15 +4,15 @@ import Layout from '@/components/Elements/Layout/Layout';
 import NotFound from '@/components/Pages/NotFound/NotFound';  
 import About from '@/components/Pages/About/About';  
 import HeroCountry from '@/components/Pages/HeroCountry/HeroCountry';
-import CountryPage from '@/components/Elements/CountryPage/CountryPage';
+import CountryPage from '@/components/Pages/CountryPage/CountryPage';
 import Contact from '@/components/Pages/Contact/Contact';
-import List from './components/Pages/List/List';
+import List from './components/Pages/List/Countrylist/CountryList';
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<Layout />}>
+        <Route element={<Layout />}>S
           <Route 
             path="/" 
             element={
