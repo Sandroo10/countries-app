@@ -59,17 +59,19 @@ const Contact: React.FC = () => {
     console.log(formData);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
     if (e.key === 'Enter') {
-      e.preventDefault(); 
-      handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
+      e.preventDefault();
+      const formData = new FormData(e.currentTarget);
+      const data = Object.fromEntries(formData.entries());
+      console.log(data); 
     }
   };
 
   return (
     <div className={styles.contactContainer}>
       <h1>Contact Us</h1>
-      <form onSubmit={handleSubmit} className={styles.contactForm} noValidate>
+      <form onSubmit={handleSubmit} onKeyDown={handleKeyDown} className={styles.contactForm} noValidate>
         <div>
           <label htmlFor="name">Name:</label>
           <input
@@ -78,7 +80,6 @@ const Contact: React.FC = () => {
             name="name"
             value={formData.name}
             onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
             required
           />
           {errors.name && <p className={styles.error}>{errors.name}</p>}
@@ -92,7 +93,6 @@ const Contact: React.FC = () => {
             name="surname"
             value={formData.surname}
             onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
             required
           />
           {errors.surname && <p className={styles.error}>{errors.surname}</p>}
@@ -106,7 +106,6 @@ const Contact: React.FC = () => {
             name="email"
             value={formData.email}
             onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
             required
           />
           {errors.email && <p className={styles.error}>{errors.email}</p>}
@@ -119,7 +118,6 @@ const Contact: React.FC = () => {
             name="message"
             value={formData.message}
             onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
             required
           />
           {errors.message && <p className={styles.error}>{errors.message}</p>}
