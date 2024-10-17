@@ -89,3 +89,52 @@ h2 {
 .sortButton:hover {
   background-color: #007bb5;
 }
+
+.addForm {
+  display: flex;
+  align-items: flex-start; 
+  gap: 20px;
+  justify-content: center;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+}
+
+.formGroup label {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.formGroup input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-bottom: 25px; 
+}
+
+.formGroup .error {
+  color: red;
+  font-size: 12px;
+  margin-top: -20px; 
+  height: 15px; 
+}
+
+button {
+  padding: 10px 15px;
+  font-size: 14px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
