@@ -62,9 +62,7 @@ const Contact: React.FC = () => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      const formData = new FormData(e.currentTarget);
-      const data = Object.fromEntries(formData.entries());
-      console.log(data); 
+      handleSubmit(e);
     }
   };
 
