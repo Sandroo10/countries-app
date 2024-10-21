@@ -12,9 +12,9 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<Layout />}>S
+        <Route path='/:lang' element={<Layout />}>S
           <Route 
-            path="/" 
+            index
             element={
               <Suspense fallback={<h1 style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '100px' }}>Loading...</h1>}>
                 <HeroCountry />
@@ -22,12 +22,13 @@ const App: React.FC = () => {
             } 
           />
           <Route path="about" element={<About />} />
-          <Route path="contact" element={<Contact />} />
+          <Route path="contact" element={<Contact/>} />
           <Route path="list" element={<List />} />
           <Route path=":id" element={<CountryPage />} />
         </Route>
-        <Route path="*" element={<Navigate to="/404" />} />
-        <Route path="/404" element={<NotFound />} />
+        <Route path='/' element= {<Navigate to="/en"/>}/>
+        <Route path='*' element= {<Navigate to="/404"/>}/>
+        <Route path="404" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

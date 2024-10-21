@@ -9,11 +9,11 @@ const CountryCard: React.FC = () => {
   return (
     <div className={styles.cardContainer}>
       {countries.map((country) => (
-        <Link to={`/${country.id}`} key={country.id} className={styles.countryLink}> 
+        <Link to={`${country.id}`} key={country.id} className={styles.countryLink}> 
           <div className={styles.countryCard}>
             <CountryImage image={country.image} name={country.name} />
             <CountryDetails
-              name={country.name}
+              id={String(country.id)} // Pass the country ID
               capital={country.capital}
               population={country.population}
             />

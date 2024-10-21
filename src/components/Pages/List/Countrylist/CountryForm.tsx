@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Country } from '@/data/Countries';
+import { translations } from '@/data/translations';
 import styles from './List.module.css';
 
 type CountryFormProps = {
@@ -7,6 +9,9 @@ type CountryFormProps = {
 };
 
 const CountryForm: React.FC<CountryFormProps> = ({ onAddCountry }) => {
+  const { lang } = useParams<{ lang: string }>();
+  const t = translations[lang as keyof typeof translations] || translations.en;
+
   const [newCountry, setNewCountry] = useState({
     name: '',
     population: '',
@@ -25,7 +30,7 @@ const CountryForm: React.FC<CountryFormProps> = ({ onAddCountry }) => {
 
     if (name === 'name') {
       if (value.length > 8) {
-        setErrors({ ...errors, name: 'Country Name must be 8 characters or less.' });
+        setErrors({ ...errors, name: t.errors.countryNameLength });
       } else {
         setErrors({ ...errors, name: '' });
       }
@@ -48,18 +53,17 @@ const CountryForm: React.FC<CountryFormProps> = ({ onAddCountry }) => {
     };
 
     onAddCountry(newCountryData);
-
     setNewCountry({ name: '', population: '', capital: '', image: '' });
   };
 
   return (
     <form onSubmit={handleAddCountry} className={styles.addForm}>
       <div className={styles.formGroup}>
-        <label>Country Name (max 8 characters)</label>
+        <label>{t.labels.countryName} (max 8 characters)</label>
         <input
           type="text"
           name="name"
-          placeholder="Country Name"
+          placeholder={t.labels.countryNamePlaceholder}
           value={newCountry.name}
           onChange={handleInputChange}
         />
@@ -67,40 +71,40 @@ const CountryForm: React.FC<CountryFormProps> = ({ onAddCountry }) => {
       </div>
 
       <div className={styles.formGroup}>
-        <label>Population</label>
+        <label>{t.labels.population}</label>
         <input
           type="number"
           name="population"
-          placeholder="Population"
+          placeholder={t.labels.populationPlaceholder}
           value={newCountry.population}
           onChange={handleInputChange}
         />
       </div>
 
       <div className={styles.formGroup}>
-        <label>Capital</label>
+        <label>{t.labels.capital}</label>
         <input
           type="text"
           name="capital"
-          placeholder="Capital"
+          placeholder={t.labels.capitalPlaceholder}
           value={newCountry.capital}
           onChange={handleInputChange}
         />
       </div>
 
       <div className={styles.formGroup}>
-        <label>Image URL</label>
+        <label>{t.labels.image}</label>
         <input
           type="text"
           name="image"
-          placeholder="Image URL"
+          placeholder={t.labels.imagePlaceholder}
           value={newCountry.image}
           onChange={handleInputChange}
         />
       </div>
 
       <button type="submit" disabled={!!errors.name}>
-        Add Country
+        {t.labels.addCountry}
       </button>
     </form>
   );

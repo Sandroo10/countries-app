@@ -1,4 +1,6 @@
 import React from 'react';
+import { useParams } from 'react-router-dom'; // Import useParams
+import { translations } from '@/data/translations'; // Ensure correct path
 import { Country } from '@/data/Countries';
 import styles from './List.module.css';
 
@@ -10,6 +12,9 @@ type CountryCardProps = {
 };
 
 const CountryCard: React.FC<CountryCardProps> = ({ country, onLike, onDelete, onRestore }) => {
+  const { lang } = useParams<{ lang: string }>(); 
+  const t = translations[lang as keyof typeof translations] || translations.en;
+
   return (
     <div
       className={styles.countryCard}
@@ -19,19 +24,19 @@ const CountryCard: React.FC<CountryCardProps> = ({ country, onLike, onDelete, on
       }}
     >
       <img src={country.image} alt={country.name} className={styles.countryImage} />
-      <h2>{country.name}</h2>
-      <p>Population: {country.population}</p>
-      <p>Capital: {country.capital}</p>
+      <h2>{t.countries[String(country.id) as keyof typeof t.countries]?.name || country.name}</h2>
+      <p>{t.countryCards.population}: {country.population}</p>
+      <p>{t.countryCards.capital}: {country.capital}</p>
       <button onClick={() => onLike(country.id)} className={styles.likeButton}>
-        Like ({country.likes})
+        {t.countryCards.like} ({country.likes})
       </button>
       {!country.isDeleted ? (
         <button onClick={() => onDelete(country.id)} className={styles.deleteButton}>
-          Delete
+          {t.countryCards.delete}
         </button>
       ) : (
         <button onClick={() => onRestore(country.id)} className={styles.restoreButton}>
-          Restore
+          {t.countryCards.restore}
         </button>
       )}
     </div>

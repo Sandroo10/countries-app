@@ -1,14 +1,18 @@
+// Hero.tsx
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import styles from './Hero.module.css';
+import { translations } from '@/data/translations';
 
 const Hero: React.FC = () => {
+  const { lang } = useParams(); 
+  const t = translations[lang as keyof typeof translations] || translations.en; 
+
   return (
     <section className={styles.hero}>
       <div className={styles.heroContent}>
-        <h1>Discover Ibiza</h1>
-        <p>
-          Ibiza, the party capital of the world, is known for its stunning beaches, vibrant nightlife, and breathtaking sunsets. Explore the hidden coves, luxurious resorts, and world-famous clubs that make Ibiza an unforgettable destination.
-        </p>
+        <h1>{t.heroTitle}</h1>
+        <p>{t.heroDescription}</p>
       </div>
     </section>
   );
