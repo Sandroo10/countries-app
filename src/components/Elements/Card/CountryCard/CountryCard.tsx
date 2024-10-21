@@ -13,7 +13,7 @@ const CountryCard: React.FC = () => {
           <div className={styles.countryCard}>
             <CountryImage image={country.image} name={country.name} />
             <CountryDetails
-              id={String(country.id)} // Pass the country ID
+              id={String(country.id)} 
               capital={country.capital}
               population={country.population}
             />

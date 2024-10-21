@@ -1,6 +1,6 @@
 import React from 'react';
-import { useParams } from 'react-router-dom'; // Import useParams
-import { translations } from '@/data/translations'; // Ensure correct path
+import { useParams } from 'react-router-dom'; 
+import { translations } from '@/data/translations'; 
 import { Country } from '@/data/Countries';
 import styles from './List.module.css';
 

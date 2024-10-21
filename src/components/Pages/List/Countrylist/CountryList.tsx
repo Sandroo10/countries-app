@@ -1,16 +1,16 @@
 import React, { useReducer } from 'react';
-import { useParams } from 'react-router-dom'; // Import useParams
+import { useParams } from 'react-router-dom';
 import { Country, countries as initialCountries } from '@/data/Countries';
 import { reducer, initialState } from '../Functions/useCountriesReducer';
 import { useSortedCountries } from '../Functions/useSortedCountries';
 import CountryForm from './CountryForm';
 import CountryCard from './CountryCard';
-import { translations } from '@/data/translations'; // Ensure correct path
+import { translations } from '@/data/translations'; 
 import styles from './List.module.css';
 
 const CountryList: React.FC = () => {
-  const { lang } = useParams<{ lang: string }>(); // Get the language parameter
-  const t = translations[lang as keyof typeof translations] || translations.en; // Fetch translations
+  const { lang } = useParams<{ lang: string }>();
+  const t = translations[lang as keyof typeof translations] || translations.en;
 
   const [state, dispatch] = useReducer(reducer, {
     ...initialState,
@@ -44,7 +44,7 @@ const CountryList: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <h1>{t.listTitle}</h1> {/* Use translation for the title */}
+      <h1>{t.listTitle}</h1> 
 
       <CountryForm onAddCountry={handleAddCountry} />
 

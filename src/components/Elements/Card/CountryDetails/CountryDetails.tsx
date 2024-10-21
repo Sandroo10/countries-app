@@ -4,7 +4,7 @@ import { translations } from '@/data/translations';
 import styles from './CountryDetails.module.css';
 
 interface CountryDetailsProps {
-  id: string; // Add ID prop to fetch the correct country
+  id: string;
   capital: string;
   population: number;
 }
@@ -12,7 +12,7 @@ interface CountryDetailsProps {
 const CountryDetails: React.FC<CountryDetailsProps> = ({ id, capital, population }) => {
   const { lang } = useParams<{ lang: string }>();
   const t = translations[lang as keyof typeof translations] || translations.en;
-  const countryData = t.countries[id as keyof typeof t.countries]; // Replace countryId with your actual country ID
+  const countryData = t.countries[id as keyof typeof t.countries]; 
   const countryName = countryData?.name || countryData?.name;
 
   return (
