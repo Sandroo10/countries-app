@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import { Country } from '@/data/Countries';
 import styles from './List.module.css';
+import { translations } from '@/data/translations';
+import { useParams } from 'react-router-dom';
 
 type CountryFormProps = {
   onAddCountry: (country: Country) => void;
 };
 
 const CountryForm: React.FC<CountryFormProps> = ({ onAddCountry }) => {
+  const { lang } = useParams<{ lang: string }>(); 
+  const t = translations[lang as keyof typeof translations] || translations.en;
+
   const [newCountry, setNewCountry] = useState({
     nameGeorgian: '',
     nameEnglish: '',
@@ -129,7 +134,7 @@ const CountryForm: React.FC<CountryFormProps> = ({ onAddCountry }) => {
   return (
     <form onSubmit={handleAddCountry} className={styles.addForm}>
       <div className={styles.formGroup}>
-        <label>Country Name (Georgian)</label>
+        <label>{t.countryNameGeorgian}</label>
         <input
           type="text"
           name="nameGeorgian"
@@ -141,7 +146,7 @@ const CountryForm: React.FC<CountryFormProps> = ({ onAddCountry }) => {
       </div>
 
       <div className={styles.formGroup}>
-        <label>Country Name (English)</label>
+        <label>{t.countryNameEnglish}</label>
         <input
           type="text"
           name="nameEnglish"
@@ -153,7 +158,7 @@ const CountryForm: React.FC<CountryFormProps> = ({ onAddCountry }) => {
       </div>
 
       <div className={styles.formGroup}>
-        <label>Capital (Georgian)</label>
+        <label>{t.capitalGeorgian}</label>
         <input
           type="text"
           name="capitalGeorgian"
@@ -164,7 +169,7 @@ const CountryForm: React.FC<CountryFormProps> = ({ onAddCountry }) => {
       </div>
 
       <div className={styles.formGroup}>
-        <label>Capital (English)</label>
+        <label>{t.capitalEnglish}</label>
         <input
           type="text"
           name="capitalEnglish"
@@ -175,7 +180,7 @@ const CountryForm: React.FC<CountryFormProps> = ({ onAddCountry }) => {
       </div>
 
       <div className={styles.formGroup}>
-        <label>Population</label>
+        <label>{t.population}</label>
         <input
           type="number"
           name="population"
@@ -186,13 +191,13 @@ const CountryForm: React.FC<CountryFormProps> = ({ onAddCountry }) => {
       </div>
 
       <div className={styles.formGroup}>
-        <label>Image (must be .jpg or .png)</label>
+        <label>{t.image} </label>
         <input type="file" accept=".jpg, .jpeg, .png" onChange={handleFileChange} />
         {errors.image && <p className={styles.error}>{errors.image}</p>}
       </div>
 
       <button type="submit" disabled={!!errors.nameGeorgian || !!errors.nameEnglish || !!errors.image || !isImageConverted}>
-        Add Country
+        {t.labels.addCountry}
       </button>
     </form>
   );

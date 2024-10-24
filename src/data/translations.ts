@@ -67,6 +67,12 @@ export const translations = {
       invalidEnglish: 'Country name must contain only English letters.',
       invalidGeorgian: '',
     },
+    countryNameGeorgian: "Country Name (Georgian)",
+    countryNameEnglish: "Country Name (English)",
+    capitalGeorgian: "Capital (Georgian)",
+    capitalEnglish: "Capital (English)",
+    population: "Population",
+    image: "Image (must be .jpg or .png)",
   },
   ka: {
     heroTitle: 'აღმოაჩინეთ იბიცა',
@@ -127,7 +133,7 @@ export const translations = {
       imagePlaceholder: 'სურათის URL',
       addCountry: 'ქვეყნის დამატება',
       switchToGeorgian: "გადართვა ქართულზე",
-    switchToEnglish: "გადართვა ინგლისურზე",
+      switchToEnglish: "გადართვა ინგლისურზე",
     },
     
     errors: {
@@ -138,5 +144,11 @@ export const translations = {
       invalidGeorgian: 'ქვეყნის სახელი უნდა შეიცავდეს მხოლოდ ქართულ ასოებს.',
       invalidEnglish: '',
     },
+    countryNameGeorgian: "ქვეყნის სახელი (ქართული)",
+    countryNameEnglish: "ქვეყნის სახელი (ინგლისური)",
+    capitalGeorgian: "დედაქალაქი (ქართული)",
+    capitalEnglish: "დედაქალაქი (ინგლისური)",
+    population: "მოსახლეობა",
+    image: "სურათი (უნდა იყოს .jpg ან .png)",
   },
 };
