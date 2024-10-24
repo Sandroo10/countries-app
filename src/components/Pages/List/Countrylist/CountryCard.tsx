@@ -15,7 +15,6 @@ const CountryCard: React.FC<CountryCardProps> = ({ country, onLike, onDelete, on
   const { lang } = useParams<{ lang: string }>(); 
   const t = translations[lang as keyof typeof translations] || translations.en;
 
-  // Determine whether to show Georgian or English name/capital based on the current language
   const displayName = lang === 'ka' ? country.nameGeorgian : country.name;
   const displayCapital = lang === 'ka' ? country.capitalGeorgian : country.capital;
 

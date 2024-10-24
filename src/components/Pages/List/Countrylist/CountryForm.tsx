@@ -18,19 +18,18 @@ const CountryForm: React.FC<CountryFormProps> = ({ onAddCountry }) => {
     capitalGeorgian: '',
     capitalEnglish: '',
     population: '',
-    image: '' as string | null, // Image as Base64 or null
+    image: '' as string | null, 
   });
 
   const [errors, setErrors] = useState({ nameGeorgian: '', nameEnglish: '', image: '' });
-  const [isImageConverted, setIsImageConverted] = useState(false); // Track conversion
+  const [isImageConverted, setIsImageConverted] = useState(false); 
 
-  const georgianRegex = /^[\u10A0-\u10FF]+$/; // Georgian letters only
-  const englishRegex = /^[A-Za-z]+$/; // English letters only
+  const georgianRegex = /^[\u10A0-\u10FF]+$/; 
+  const englishRegex = /^[A-Za-z]+$/;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-  
-    // Allow backspace (empty value) without validation errors
+
     if (value === '') {
       setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
       setNewCountry((prevCountry) => ({
@@ -39,8 +38,7 @@ const CountryForm: React.FC<CountryFormProps> = ({ onAddCountry }) => {
       }));
       return;
     }
-  
-    // Georgian validation for name and capital
+
     if (name === 'nameGeorgian' || name === 'capitalGeorgian') {
       if (!georgianRegex.test(value)) {
         setErrors((prevErrors) => ({
@@ -50,8 +48,7 @@ const CountryForm: React.FC<CountryFormProps> = ({ onAddCountry }) => {
         return;
       }
     }
-  
-    // English validation for name and capital
+
     if (name === 'nameEnglish' || name === 'capitalEnglish') {
       if (!englishRegex.test(value)) {
         setErrors((prevErrors) => ({
@@ -61,8 +58,7 @@ const CountryForm: React.FC<CountryFormProps> = ({ onAddCountry }) => {
         return;
       }
     }
-  
-    // If valid, update state and clear errors
+
     setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
     setNewCountry((prevCountry) => ({
       ...prevCountry,
@@ -79,9 +75,9 @@ const CountryForm: React.FC<CountryFormProps> = ({ onAddCountry }) => {
       console.log('Base64 conversion successful:', reader.result);
       setNewCountry((prevCountry) => ({
         ...prevCountry,
-        image: reader.result as string, // Store as Base64 string
+        image: reader.result as string, 
       }));
-      setIsImageConverted(true); // Mark as converted
+      setIsImageConverted(true); 
     };
 
     reader.onerror = () => {
@@ -89,7 +85,7 @@ const CountryForm: React.FC<CountryFormProps> = ({ onAddCountry }) => {
         ...prevErrors,
         image: 'Image conversion failed. Please try again.',
       }));
-      setIsImageConverted(false); // Ensure the form can't submit
+      setIsImageConverted(false);
     };
   };
 
@@ -102,7 +98,7 @@ const CountryForm: React.FC<CountryFormProps> = ({ onAddCountry }) => {
         return;
       }
 
-      convertToBase64(file); // Convert to Base64
+      convertToBase64(file); 
     }
   };
 
@@ -111,16 +107,16 @@ const CountryForm: React.FC<CountryFormProps> = ({ onAddCountry }) => {
 
     if (errors.nameGeorgian || errors.nameEnglish || errors.image || !isImageConverted) {
       console.log('Form submission blocked due to errors or pending image conversion.');
-      return; // Prevent submission if errors exist
+      return; 
     }
 
     const newCountryData: Country = {
       id: Date.now(),
-      name: newCountry.nameEnglish, // Use the English name for consistency
+      name: newCountry.nameEnglish, 
       population: Number(newCountry.population),
-      capital: newCountry.capitalEnglish, // Use the English capital for consistency
+      capital: newCountry.capitalEnglish, 
       likes: 0,
-      image: newCountry.image as string, // Use Base64 string
+      image: newCountry.image as string, 
       isDeleted: false,
       nameGeorgian: newCountry.nameGeorgian,
       capitalGeorgian: newCountry.capitalGeorgian,
@@ -128,7 +124,7 @@ const CountryForm: React.FC<CountryFormProps> = ({ onAddCountry }) => {
 
     onAddCountry(newCountryData);
     setNewCountry({ nameGeorgian: '', nameEnglish: '', capitalGeorgian: '', capitalEnglish: '', population: '', image: null });
-    setIsImageConverted(false); // Reset for next submission
+    setIsImageConverted(false); 
   };
 
   return (
