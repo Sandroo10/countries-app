@@ -57,10 +57,15 @@ export const translations = {
       imagePlaceholder: 'Image URL',
       addCountry: 'Add Country',
     },
+    switchToGeorgian: "Switch to Georgian",
+    switchToEnglish: "Switch to English",
     errors: {
       required: (field: string) => `${field} is required.`,
       minLength: (field: string) => `${field} must be at least 4 characters.`,
       countryNameLength: 'Country Name must be 8 characters or less.',
+      invalidImage: 'Image must be a .jpg or .png file.',
+      invalidEnglish: 'Country name must contain only English letters.',
+      invalidGeorgian: '',
     },
   },
   ka: {
@@ -121,11 +126,17 @@ export const translations = {
       image: 'სურათის URL',
       imagePlaceholder: 'სურათის URL',
       addCountry: 'ქვეყნის დამატება',
+      switchToGeorgian: "გადართვა ქართულზე",
+    switchToEnglish: "გადართვა ინგლისურზე",
     },
+    
     errors: {
       required: (field: string) => `${field} აუცილებელია.`,
       minLength: (field: string) => `${field} უნდა იყოს მინიმუმ 4 სიმბოლო.`,
       countryNameLength: 'ქვეყნის სახელი უნდა იყოს 8 სიმბოლოზე ნაკლები.',
+      invalidImage: 'სურათი უნდა იყოს .jpg ან .png ფაილი.',
+      invalidGeorgian: 'ქვეყნის სახელი უნდა შეიცავდეს მხოლოდ ქართულ ასოებს.',
+      invalidEnglish: '',
     },
   },
 };

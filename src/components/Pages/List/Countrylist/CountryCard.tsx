@@ -15,6 +15,10 @@ const CountryCard: React.FC<CountryCardProps> = ({ country, onLike, onDelete, on
   const { lang } = useParams<{ lang: string }>(); 
   const t = translations[lang as keyof typeof translations] || translations.en;
 
+  // Determine whether to show Georgian or English name/capital based on the current language
+  const displayName = lang === 'ka' ? country.nameGeorgian : country.name;
+  const displayCapital = lang === 'ka' ? country.capitalGeorgian : country.capital;
+
   return (
     <div
       className={styles.countryCard}
@@ -23,10 +27,10 @@ const CountryCard: React.FC<CountryCardProps> = ({ country, onLike, onDelete, on
         order: country.isDeleted ? 1 : 0,
       }}
     >
-      <img src={country.image} alt={country.name} className={styles.countryImage} />
-      <h2>{t.countries[String(country.id) as keyof typeof t.countries]?.name || country.name}</h2>
+      <img src={country.image} alt={displayName} className={styles.countryImage} />
+      <h2>{t.countries[String(country.id) as keyof typeof t.countries]?.name || displayName}</h2>
       <p>{t.countryCards.population}: {country.population}</p>
-      <p>{t.countryCards.capital}: {country.capital}</p>
+      <p>{t.countryCards.capital}: {displayCapital}</p>
       <button onClick={() => onLike(country.id)} className={styles.likeButton}>
         {t.countryCards.like} ({country.likes})
       </button>

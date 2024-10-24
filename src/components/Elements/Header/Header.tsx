@@ -9,7 +9,8 @@ const Header: React.FC = () => {
 
   const switchLanguage = () => {
     const newLang = lang === 'en' ? 'ka' : 'en';
-    navigate(`/${newLang}`);
+    const currentPath = window.location.pathname.replace(`/${lang}`, `/${newLang}`);
+    navigate(currentPath);
   };
 
   const t = translations[lang as keyof typeof translations] || translations.en;

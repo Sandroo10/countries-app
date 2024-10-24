@@ -1,4 +1,6 @@
 export type Country = {
+  nameGeorgian: string;
+  capitalGeorgian: string;
   id: number;
   name: string;
   population: number;
@@ -16,7 +18,9 @@ export type Country = {
       population: 126300000,
       capital: 'Tokyo',
       likes: 187,
-      isDeleted: false
+      isDeleted: false,
+      nameGeorgian: '',
+      capitalGeorgian: '',
     },
     {
       id: 2,
@@ -25,7 +29,9 @@ export type Country = {
       population: 67390000,
       capital: 'Paris',
       likes: 187,
-      isDeleted: false
+      isDeleted: false,
+      nameGeorgian: '',
+      capitalGeorgian: '',
     },
     {
       id:3,
@@ -34,6 +40,8 @@ export type Country = {
       population: 212600000,
       capital: 'Brasília',
       likes: 13,
-      isDeleted: false
+      isDeleted: false,
+      nameGeorgian: '',
+      capitalGeorgian: '',
     }
   ];
