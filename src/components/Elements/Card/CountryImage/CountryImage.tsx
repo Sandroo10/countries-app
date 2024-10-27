@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './CountryImage.module.css';
+import React from "react";
+import styles from "./CountryImage.module.css";
 
 interface CountryImageProps {
   image: string;

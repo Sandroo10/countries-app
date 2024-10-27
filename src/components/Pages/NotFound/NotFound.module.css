@@ -1,26 +1,25 @@
 .notFoundContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    height: 100vh;
-  }
-  
-  .notFoundTitle {
-    font-size: 3rem;
-    color: #333;
-    margin-bottom: 1rem;
-  }
-  
-  .notFoundText {
-    font-size: 1.2rem;
-    color: #666;
-    margin-bottom: 2rem;
-  }
-  
-  .notFoundImage {
-    width: 300px;
-    height: auto;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100vh;
+}
+
+.notFoundTitle {
+  font-size: 3rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.notFoundText {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.notFoundImage {
+  width: 300px;
+  height: auto;
+}

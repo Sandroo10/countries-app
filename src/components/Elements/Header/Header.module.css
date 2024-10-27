@@ -1,5 +1,5 @@
 .header {
-  position: fixed; 
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 1000;
@@ -17,8 +17,8 @@
   margin: 0;
   font-size: 36px;
   color: #333;
-  font-family: 'Pacifico', cursive;
-  transform: rotate(-5deg); 
+  font-family: "Pacifico", cursive;
+  transform: rotate(-5deg);
   margin-left: 40%;
 }
 
@@ -26,20 +26,21 @@
   margin-right: 8%;
 }
 
-
 .linkButton {
   margin-left: 15px;
-  display: inline-block;       
-  padding: 10px 15px;        
-  background-color: transparent;    
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: transparent;
   color: #007bff;
-  border: 2px solid #007bff;    
-  border-radius: 5px;         
-  text-decoration: none;      
-  transition: background-color 0.3s, color 0.3s; 
+  border: 2px solid #007bff;
+  border-radius: 5px;
+  text-decoration: none;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
 }
 
 .linkButton:hover {
-  background-color: #007bff;; 
+  background-color: #007bff;
   color: white;
 }

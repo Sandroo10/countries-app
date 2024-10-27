@@ -4,7 +4,7 @@
   align-items: center;
   padding: 20px;
   margin-top: 140px;
-  text-align: center; 
+  text-align: center;
 }
 
 .imagesContainer {
@@ -16,19 +16,21 @@
   margin-bottom: 20px;
 }
 
-.imageLeft, .imageCenter, .imageRight {
+.imageLeft,
+.imageCenter,
+.imageRight {
   width: 300px;
   height: 250px;
   object-fit: cover;
   border-radius: 10px;
 }
-.imageCenter{
-  transform:translateY(-40px)
+.imageCenter {
+  transform: translateY(-40px);
 }
 
 .description {
   max-width: 600px;
   font-size: 16px;
   line-height: 1.6;
-  margin-top: 20px; 
+  margin-top: 20px;
 }

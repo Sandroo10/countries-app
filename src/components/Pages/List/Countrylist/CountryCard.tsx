@@ -1,8 +1,8 @@
-import React from 'react';
-import { useParams } from 'react-router-dom'; 
-import { translations } from '@/data/translations'; 
-import { Country } from '@/data/Countries';
-import styles from './List.module.css';
+import React from "react";
+import { useParams } from "react-router-dom";
+import { translations } from "@/data/translations";
+import { Country } from "@/data/Countries";
+import styles from "./List.module.css";
 
 type CountryCardProps = {
   country: Country;
@@ -11,12 +11,18 @@ type CountryCardProps = {
   onRestore: (id: number) => void;
 };
 
-const CountryCard: React.FC<CountryCardProps> = ({ country, onLike, onDelete, onRestore }) => {
-  const { lang } = useParams<{ lang: string }>(); 
+const CountryCard: React.FC<CountryCardProps> = ({
+  country,
+  onLike,
+  onDelete,
+  onRestore,
+}) => {
+  const { lang } = useParams<{ lang: string }>();
   const t = translations[lang as keyof typeof translations] || translations.en;
 
-  const displayName = lang === 'ka' ? country.nameGeorgian : country.name;
-  const displayCapital = lang === 'ka' ? country.capitalGeorgian : country.capital;
+  const displayName = lang === "ka" ? country.nameGeorgian : country.name;
+  const displayCapital =
+    lang === "ka" ? country.capitalGeorgian : country.capital;
 
   return (
     <div
@@ -26,19 +32,36 @@ const CountryCard: React.FC<CountryCardProps> = ({ country, onLike, onDelete, on
         order: country.isDeleted ? 1 : 0,
       }}
     >
-      <img src={country.image} alt={displayName} className={styles.countryImage} />
-      <h2>{t.countries[String(country.id) as keyof typeof t.countries]?.name || displayName}</h2>
-      <p>{t.countryCards.population}: {country.population}</p>
-      <p>{t.countryCards.capital}: {displayCapital}</p>
+      <img
+        src={country.image}
+        alt={displayName}
+        className={styles.countryImage}
+      />
+      <h2>
+        {t.countries[String(country.id) as keyof typeof t.countries]?.name ||
+          displayName}
+      </h2>
+      <p>
+        {t.countryCards.population}: {country.population}
+      </p>
+      <p>
+        {t.countryCards.capital}: {displayCapital}
+      </p>
       <button onClick={() => onLike(country.id)} className={styles.likeButton}>
         {t.countryCards.like} ({country.likes})
       </button>
       {!country.isDeleted ? (
-        <button onClick={() => onDelete(country.id)} className={styles.deleteButton}>
+        <button
+          onClick={() => onDelete(country.id)}
+          className={styles.deleteButton}
+        >
           {t.countryCards.delete}
         </button>
       ) : (
-        <button onClick={() => onRestore(country.id)} className={styles.restoreButton}>
+        <button
+          onClick={() => onRestore(country.id)}
+          className={styles.restoreButton}
+        >
           {t.countryCards.restore}
         </button>
       )}

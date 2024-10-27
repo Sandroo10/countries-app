@@ -87,7 +87,7 @@
 //     const newCountryData: Country = {
 //       id: Date.now(),
 //       name: newCountry.name,
-//       population: Number(newCountry.population),  
+//       population: Number(newCountry.population),
 //       capital: newCountry.capital,
 //       likes: 0,
 //       image: newCountry.image,
@@ -96,7 +96,6 @@
 //     dispatch({ type: 'ADD_COUNTRY', country: newCountryData });
 //     setNewCountry({ name: '', population: '', capital: '', image: '' });
 //   };
-  
 
 //   const handleDeleteCountry = (id: number) => {
 //     dispatch({ type: 'DELETE_COUNTRY', id });
@@ -127,7 +126,7 @@
 //     required
 //   />
 //   <input
-//     type="number"  
+//     type="number"
 //     placeholder="Population"
 //     value={newCountry.population}
 //     onChange={(e) => setNewCountry({ ...newCountry, population: e.target.value })}
@@ -150,13 +149,12 @@
 //   <button type="submit">Add Country</button>
 // </form>
 
-
 //       <button onClick={toggleSortByLikes} className={styles.sortButton}>
 //         {state.sortByLikes === 'asc' && 'Sort by Likes (Descending)'}
 //         {state.sortByLikes === 'desc' && 'Clear Sort'}
 //         {!state.sortByLikes && 'Sort by Likes (Ascending)'}
 //       </button>
-  
+
 //       <div className={styles.countriesGrid}>
 //         {sortedCountries.map((country) => (
 //           <div
@@ -164,7 +162,7 @@
 //             className={styles.countryCard}
 //             style={{
 //               opacity: country.isDeleted ? 0.5 : 1,
-//               order: country.isDeleted ? 1 : 0, 
+//               order: country.isDeleted ? 1 : 0,
 //             }}
 //           >
 //             <img src={country.image} alt={country.name} className={styles.countryImage} />
@@ -187,7 +185,7 @@
 //         ))}
 //       </div>
 //     </div>
-//   );  
+//   );
 // };
 
 // export default List;
