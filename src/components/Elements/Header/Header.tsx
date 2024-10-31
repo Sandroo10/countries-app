@@ -30,6 +30,9 @@ const Header: React.FC = () => {
         <Link to={`list`} className={styles.linkButton}>
           {t.list}
         </Link>
+        <Link to={`test`} className={styles.linkButton}>
+          {t.test}
+        </Link>
         <Link to={`about`} className={styles.linkButton}>
           {t.about}
         </Link>

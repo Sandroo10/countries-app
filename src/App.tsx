@@ -7,6 +7,7 @@ import HeroCountry from "@/components/Pages/HeroCountry/HeroCountry";
 import CountryPage from "@/components/Pages/CountryPage/CountryPage";
 import Contact from "@/components/Pages/Contact/Contact";
 import List from "./components/Pages/List/Countrylist/CountryList";
+import TestView from "@/components/Pages/Test/Test";
 
 const App: React.FC = () => {
   return (
@@ -38,6 +39,7 @@ const App: React.FC = () => {
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
           <Route path="list" element={<List />} />
+          <Route path="test" element={<TestView numInputs={4} />} />
           <Route path=":id" element={<CountryPage />} />
         </Route>
         <Route path="/" element={<Navigate to="/en" />} />
