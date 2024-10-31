@@ -11,7 +11,7 @@ const Test = ({ numInputs }: { numInputs: number }) => {
     if (!/^\d*$/.test(value)) return;
 
     if (value.length > 1) {
-      const values = value.split("").slice(0, numInputs - index); 
+      const values = value.split("").slice(0, numInputs - index);
       const newInputs = [...inputs];
 
       values.forEach((char, i) => {
@@ -21,9 +21,9 @@ const Test = ({ numInputs }: { numInputs: number }) => {
 
       let nextFocusIndex = index + values.length;
       if (nextFocusIndex >= numInputs) {
-        nextFocusIndex = numInputs - 1; 
-        }
-        inputRefs.current[nextFocusIndex]?.focus();
+        nextFocusIndex = numInputs - 1;
+      }
+      inputRefs.current[nextFocusIndex]?.focus();
       return;
     }
 
@@ -34,11 +34,14 @@ const Test = ({ numInputs }: { numInputs: number }) => {
     if (value && index < numInputs - 1) {
       inputRefs.current[index + 1]?.focus();
     } else if (index === numInputs - 1 && value) {
-      inputRefs.current[index]?.blur(); 
+      inputRefs.current[index]?.blur();
     }
   };
 
-  const handleBackspace = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
+  const handleBackspace = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    index: number,
+  ) => {
     if (e.key === "Backspace") {
       const newInputs = [...inputs];
 

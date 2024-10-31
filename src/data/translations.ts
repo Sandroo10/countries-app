@@ -48,7 +48,7 @@ export const translations = {
     list: "List",
     about: "About",
     contact: "Contact Us",
-    test:"test",
+    test: "test",
     labels: {
       name: "Name",
       surname: "Surname",
@@ -131,7 +131,7 @@ export const translations = {
     list: "სიები",
     about: "ჩვენს შესახებ",
     contact: "დაგვიკავშირდით",
-    test:"ტესტი",
+    test: "ტესტი",
     labels: {
       name: "სახელი",
       surname: "გვარი",
