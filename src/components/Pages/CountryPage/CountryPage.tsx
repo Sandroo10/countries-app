@@ -1,12 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
-import { countryPageData } from "@/data/CountryPageData";
+import axios from "axios";
 import { translations } from "@/data/translations";
 import styles from "./CountryPage.module.css";
 
+type Country = {
+  id: string;
+  images: string[];
+  name: string;
+  description: string;
+};
+
 const CountryPage: React.FC = () => {
   const { id, lang } = useParams<{ id: string; lang: string }>();
-  const country = countryPageData.find((c) => c.id === Number(id));
+  const [country, setCountry] = useState<Country | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCountryData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/countries");
+        const countryData = response.data.find((c: Country) => c.id === id);
+        setCountry(countryData || null);
+      } catch (error) {
+        console.error("Error fetching country data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCountryData();
+  }, [id]);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   if (!country) {
     return <Navigate to="*" />;

@@ -1,0 +1,11 @@
+export type Country = {
+  id: number;
+  name: string;
+  population: number;
+  capital: string;
+  likes: number;
+  image: string;
+  isDeleted: boolean;
+  nameGeorgian: string;
+  capitalGeorgian: string;
+};

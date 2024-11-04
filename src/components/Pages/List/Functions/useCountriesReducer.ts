@@ -1,11 +1,14 @@
 import { Country } from "@/data/Countries";
 
 type Action =
-  | { type: "LIKE_COUNTRY"; id: number }
+  | { type: "INITIALIZE_COUNTRIES"; countries: Country[] }
+  | { type: "LIKE_COUNTRY"; id: string }
   | { type: "TOGGLE_SORT_BY_LIKES" }
   | { type: "ADD_COUNTRY"; country: Country }
-  | { type: "DELETE_COUNTRY"; id: number }
-  | { type: "RESTORE_COUNTRY"; id: number };
+  | { type: "DELETE_COUNTRY"; id: string }
+  | { type: "RESTORE_COUNTRY"; id: string }
+  | { type: "EDIT_COUNTRY"; country: Country }; 
+
 
 type State = {
   countries: Country[];
@@ -14,13 +17,13 @@ type State = {
 
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
+    case "INITIALIZE_COUNTRIES":
+      return { ...state, countries: action.countries };
     case "LIKE_COUNTRY":
       return {
         ...state,
         countries: state.countries.map((country) =>
-          country.id === action.id
-            ? { ...country, likes: country.likes + 1 }
-            : country,
+          country.id === action.id ? { ...country, likes: country.likes + 1 } : country
         ),
       };
     case "TOGGLE_SORT_BY_LIKES": {
@@ -39,18 +42,20 @@ export const reducer = (state: State, action: Action): State => {
         ...state,
         countries: [...state.countries, action.country],
       };
-    case "DELETE_COUNTRY":
+    case "DELETE_COUNTRY": {
+      const updatedCountries = state.countries.filter(
+        (country) => country.id !== action.id
+      );
       return {
         ...state,
-        countries: state.countries.map((country) =>
-          country.id === action.id ? { ...country, isDeleted: true } : country,
-        ),
+        countries: updatedCountries,
       };
-    case "RESTORE_COUNTRY":
+    }
+    case "EDIT_COUNTRY": 
       return {
         ...state,
         countries: state.countries.map((country) =>
-          country.id === action.id ? { ...country, isDeleted: false } : country,
+          country.id === action.country.id ? { ...action.country } : country 
         ),
       };
     default:

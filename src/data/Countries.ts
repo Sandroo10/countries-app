@@ -1,7 +1,7 @@
 export type Country = {
   nameGeorgian: string;
   capitalGeorgian: string;
-  id: number;
+  id: string;
   name: string;
   population: number;
   capital: string;
@@ -12,7 +12,7 @@ export type Country = {
 
 export const countries: Country[] = [
   {
-    id: 1,
+    id: "1",
     name: "Japan",
     image: "../src/assets/japan.jfif",
     population: 126300000,
@@ -23,7 +23,7 @@ export const countries: Country[] = [
     capitalGeorgian: "",
   },
   {
-    id: 2,
+    id: "2",
     name: "France",
     image: "../src/assets/france.jfif",
     population: 67390000,
@@ -34,7 +34,7 @@ export const countries: Country[] = [
     capitalGeorgian: "",
   },
   {
-    id: 3,
+    id: "3",
     name: "Brazil",
     image: "../src/assets/brazil.jfif",
     population: 212600000,
