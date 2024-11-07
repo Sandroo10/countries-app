@@ -8,7 +8,7 @@ async function convertImageToBase64(imageUrl) {
     return `data:image/png;base64,${base64}`;
   } catch (error) {
     console.log("Error converting image:", error.message);
-    return imageUrl; 
+    return imageUrl;
   }
 }
 
@@ -27,26 +27,25 @@ async function seedDatabase() {
 
     const processedCountries = await Promise.all(
       countries.map(async (country) => ({
-        id: country.cca3.toLowerCase(), 
+        id: country.cca3.toLowerCase(),
         name: country.name.common,
         image: await convertImageToBase64(country.flags.png),
         population: country.population,
         capital: country.capital?.[0] || "N/A",
-        likes: 0, 
+        likes: 0,
         isDeleted: false,
-        nameGeorgian: "", 
+        nameGeorgian: "",
         capitalGeorgian: "",
-        description: `${country.name.common} is a country in ${country.region}.`, 
+        description: `${country.name.common} is a country in ${country.region}.`,
         images: [
-          await convertImageToBase64(country.flags.png), 
-          await convertImageToBase64(country.flags.png), 
-          await convertImageToBase64(country.flags.png), 
+          await convertImageToBase64(country.flags.png),
+          await convertImageToBase64(country.flags.png),
+          await convertImageToBase64(country.flags.png),
         ],
-      }))
+      })),
     );
 
     existingData.countries = [...existingData.countries, ...processedCountries];
-
 
     await fs.writeFile("database.json", JSON.stringify(existingData, null, 2));
 

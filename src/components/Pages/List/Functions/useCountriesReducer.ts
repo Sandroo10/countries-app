@@ -7,8 +7,7 @@ type Action =
   | { type: "ADD_COUNTRY"; country: Country }
   | { type: "DELETE_COUNTRY"; id: string }
   | { type: "RESTORE_COUNTRY"; id: string }
-  | { type: "EDIT_COUNTRY"; country: Country }; 
-
+  | { type: "EDIT_COUNTRY"; country: Country };
 
 type State = {
   countries: Country[];
@@ -23,7 +22,9 @@ export const reducer = (state: State, action: Action): State => {
       return {
         ...state,
         countries: state.countries.map((country) =>
-          country.id === action.id ? { ...country, likes: country.likes + 1 } : country
+          country.id === action.id
+            ? { ...country, likes: country.likes + 1 }
+            : country,
         ),
       };
     case "TOGGLE_SORT_BY_LIKES": {
@@ -44,18 +45,18 @@ export const reducer = (state: State, action: Action): State => {
       };
     case "DELETE_COUNTRY": {
       const updatedCountries = state.countries.filter(
-        (country) => country.id !== action.id
+        (country) => country.id !== action.id,
       );
       return {
         ...state,
         countries: updatedCountries,
       };
     }
-    case "EDIT_COUNTRY": 
+    case "EDIT_COUNTRY":
       return {
         ...state,
         countries: state.countries.map((country) =>
-          country.id === action.country.id ? { ...action.country } : country 
+          country.id === action.country.id ? { ...action.country } : country,
         ),
       };
     default:

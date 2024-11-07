@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useState } from "react";
+import React, { useReducer, useState } from "react";
 import { useParams } from "react-router-dom";
 import { reducer, initialState } from "../Functions/useCountriesReducer";
 import { useSortedCountries } from "../Functions/useSortedCountries";
@@ -8,32 +8,57 @@ import { Country } from "@/data/Countries";
 import CountryCard from "./CountryCard";
 import { translations } from "@/data/translations";
 import styles from "./List.module.css";
-import axios from "axios";
+import { fetchCountries, addCountry, deleteCountry, updateCountry } from "@/api/countryApi";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 const CountryList: React.FC = () => {
+  const queryClient = useQueryClient();
   const { lang } = useParams<{ lang: string }>();
   const t = translations[lang as keyof typeof translations] || translations.en;
 
   const [state, dispatch] = useReducer(reducer, initialState);
   const [editingCountry, setEditingCountry] = useState<Country | null>(null);
 
-  useEffect(() => {
-    axios.get("http://localhost:3000/countries").then((res) => {
-      dispatch({ type: "INITIALIZE_COUNTRIES", countries: res.data });
-    });
-  }, []);
+
+  const { isLoading, isError } = useQuery<Country[], Error>({
+    queryKey: ["countries"],
+    queryFn: async () => {
+      const fetchedCountries: Country[] = await fetchCountries();
+      dispatch({ type: "INITIALIZE_COUNTRIES", countries: fetchedCountries });
+      return fetchedCountries;
+    }
+  });
+  
+
+  const addCountryMutation = useMutation({
+    mutationFn: addCountry,
+    onSuccess: (newCountry) => {
+      queryClient.invalidateQueries({ queryKey: ["countries"] });
+      dispatch({ type: "ADD_COUNTRY", country: newCountry });
+    },
+  });
+
+  const deleteCountryMutation = useMutation({
+    mutationFn: deleteCountry,
+    onSuccess: (_, id) => {
+      queryClient.invalidateQueries({ queryKey: ["countries"] });
+      dispatch({ type: "DELETE_COUNTRY", id });
+    },
+  });
+
+  const updateCountryMutation = useMutation({
+    mutationFn: updateCountry,
+    onSuccess: (updatedCountry) => {
+      queryClient.invalidateQueries({ queryKey: ["countries"] });
+      dispatch({ type: "EDIT_COUNTRY", country: updatedCountry });
+      setEditingCountry(null);
+    },
+  });
 
   const sortedCountries = useSortedCountries(state.countries, state.sortByLikes);
 
   const handleAddCountry = (country: Country) => {
-    axios
-    .post("http://localhost:3000/countries", country)
-    .then((res) => {
-      dispatch({ type: "ADD_COUNTRY", country: res.data });
-    })
-    .catch((error) => {
-      console.error("Error adding country:", error.response);
-    });
+    addCountryMutation.mutate(country);
   };
 
   const handleLike = (id: string) => {
@@ -41,14 +66,7 @@ const CountryList: React.FC = () => {
   };
 
   const handleDeleteCountry = (id: string) => {
-    axios
-      .delete(`http://localhost:3000/countries/${id}`)
-      .then(() => {
-        dispatch({ type: "DELETE_COUNTRY", id });
-      })
-      .catch((error) => {
-        console.error("Error deleting country:", error.response);
-      });
+    deleteCountryMutation.mutate(id);
   };
 
   const handleEditCountry = (country: Country) => {
@@ -56,15 +74,7 @@ const CountryList: React.FC = () => {
   };
 
   const handleSaveEdit = (updatedCountry: Country) => {
-    axios
-      .put(`http://localhost:3000/countries/${updatedCountry.id}`, updatedCountry)
-      .then(() => {
-        dispatch({ type: "EDIT_COUNTRY", country: updatedCountry });
-        setEditingCountry(null);
-      })
-      .catch((error) => {
-        console.error("Error updating country:", error.response);
-      });
+    updateCountryMutation.mutate(updatedCountry);
   };
 
   const handleCancelEdit = () => {
@@ -74,6 +84,9 @@ const CountryList: React.FC = () => {
   const toggleSortByLikes = () => {
     dispatch({ type: "TOGGLE_SORT_BY_LIKES" });
   };
+
+  if (isLoading) return <p>Loading countries...</p>;
+  if (isError) return <p>Error fetching countries.</p>;
 
   return (
     <div className={styles.container}>
@@ -86,7 +99,7 @@ const CountryList: React.FC = () => {
           onCancel={handleCancelEdit}
         />
       )}
-      <button onClick={toggleSortByLikes} className={styles.sortButton}>
+      <button onClick={toggleSortByLikes} className={styles.sortButton} disabled={isLoading}>
         {state.sortByLikes === "asc" ? t.countryCards.sortByLikesDesc : t.countryCards.sortByLikesAsc}
       </button>
       <div className={styles.countriesGrid}>

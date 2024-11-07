@@ -7,7 +7,11 @@ type EditCountryFormProps = {
   onCancel: () => void;
 };
 
-const EditCountryForm: React.FC<EditCountryFormProps> = ({ country, onSave, onCancel }) => {
+const EditCountryForm: React.FC<EditCountryFormProps> = ({
+  country,
+  onSave,
+  onCancel,
+}) => {
   const [formData, setFormData] = useState<Country>(country);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,15 +23,15 @@ const EditCountryForm: React.FC<EditCountryFormProps> = ({ country, onSave, onCa
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(selectedFile);
-  
+
       reader.onload = () => {
         console.log("Base64 conversion successful:", reader.result);
         resolve(reader.result as string);
       };
-  
+
       reader.onerror = (error) => {
         console.error("Image conversion failed. Please try again.", error);
-        reject(new Error("Image conversion failed.")); 
+        reject(new Error("Image conversion failed."));
       };
     });
   };
@@ -40,12 +44,12 @@ const EditCountryForm: React.FC<EditCountryFormProps> = ({ country, onSave, onCa
         console.log("Invalid image type");
         return;
       }
-  
+
       try {
         const base64Image = await convertToBase64(file);
         setFormData((prevData) => ({
           ...prevData,
-          image: base64Image, // Update the image in form data
+          image: base64Image, 
         }));
       } catch (error: unknown) {
         if (error instanceof Error) {
@@ -56,11 +60,10 @@ const EditCountryForm: React.FC<EditCountryFormProps> = ({ country, onSave, onCa
       }
     }
   };
-  
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSave(formData); // This will include the updated image in the formData
+    onSave(formData); 
   };
 
   return (
@@ -99,7 +102,9 @@ const EditCountryForm: React.FC<EditCountryFormProps> = ({ country, onSave, onCa
         onChange={handleFileChange}
       />
       <button type="submit">Save</button>
-      <button type="button" onClick={onCancel}>Cancel</button>
+      <button type="button" onClick={onCancel}>
+        Cancel
+      </button>
     </form>
   );
 };

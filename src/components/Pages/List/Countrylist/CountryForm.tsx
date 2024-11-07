@@ -3,7 +3,7 @@ import { Country } from "@/data/Countries";
 import styles from "./List.module.css";
 import { translations } from "@/data/translations";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+
 
 type CountryFormProps = {
   onAddCountry: (country: Country) => void;
@@ -136,7 +136,7 @@ const CountryForm: React.FC<CountryFormProps> = ({ onAddCountry }) => {
       capitalGeorgian: newCountry.capitalGeorgian,
     };
 
-    axios.post("http://localhost:3000/countries", newCountry).then((res) => {console.log(res.data)});
+    
 
     onAddCountry(newCountryData);
     setNewCountry({

@@ -20,17 +20,19 @@ const CountryCard: React.FC<CountryCardProps> = ({
   onEdit,
 }) => {
   const { lang } = useParams<{ lang: Language }>();
-  const language: Language = (lang === "ka" || lang === "en") ? lang : "en";
+  const language: Language = lang === "ka" || lang === "en" ? lang : "en";
   const t = translations[language];
 
   const displayName = language === "ka" ? country.nameGeorgian : country.name;
   const displayCapital =
     language === "ka" ? country.capitalGeorgian : country.capital;
 
-  const countryTranslation = t.countries[country.id as keyof typeof t.countries];
+  const countryTranslation =
+    t.countries[country.id as keyof typeof t.countries];
   const countryName = country.name || countryTranslation?.name || displayName;
-  const capital = country.capital || countryTranslation?.capital || displayCapital;
-  
+  const capital =
+    country.capital || countryTranslation?.capital || displayCapital;
+
   return (
     <div
       className={styles.countryCard}
@@ -62,10 +64,7 @@ const CountryCard: React.FC<CountryCardProps> = ({
           >
             {t.countryCards.delete}
           </button>
-          <button
-            onClick={() => onEdit(country)}
-            className={styles.editButton}
-          >
+          <button onClick={() => onEdit(country)} className={styles.editButton}>
             {t.countryCards.edit}
           </button>
         </>
