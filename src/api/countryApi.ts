@@ -3,7 +3,7 @@ import { Country } from "@/data/Countries";
 
 export const fetchCountries = async (): Promise<Country[]> => {
   try {
-    const response = await axiosInstance.get("/countries");
+    const response = await axiosInstance.get<Country[]>("/countries");
     return response.data;
   } catch (error) {
     console.error("Error fetching countries:", error);
@@ -13,8 +13,8 @@ export const fetchCountries = async (): Promise<Country[]> => {
 
 export const fetchCountryById = async (id: string): Promise<Country | null> => {
   try {
-    const response = await axiosInstance.get(`/countries/${id}`);
-    return response.data || null;
+    const response = await axiosInstance.get<Country | null>(`/countries/${id}`);
+    return response.data;
   } catch (error) {
     console.error(`Error fetching country with ID ${id}:`, error);
     throw error;
@@ -23,7 +23,7 @@ export const fetchCountryById = async (id: string): Promise<Country | null> => {
 
 export const addCountry = async (country: Country): Promise<Country> => {
   try {
-    const response = await axiosInstance.post("/countries", country);
+    const response = await axiosInstance.post<Country>("/countries", country);
     return response.data;
   } catch (error) {
     console.error("Error adding country:", error);
@@ -33,9 +33,9 @@ export const addCountry = async (country: Country): Promise<Country> => {
 
 export const updateCountry = async (country: Country): Promise<Country> => {
   try {
-    const response = await axiosInstance.put(
+    const response = await axiosInstance.put<Country>(
       `/countries/${country.id}`,
-      country,
+      country
     );
     return response.data;
   } catch (error) {
@@ -46,7 +46,7 @@ export const updateCountry = async (country: Country): Promise<Country> => {
 
 export const deleteCountry = async (id: string): Promise<void> => {
   try {
-    await axiosInstance.delete(`/countries/${id}`);
+    await axiosInstance.delete<void>(`/countries/${id}`);
   } catch (error) {
     console.error(`Error deleting country with ID ${id}:`, error);
     throw error;
