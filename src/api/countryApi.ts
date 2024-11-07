@@ -7,7 +7,7 @@ export const fetchCountries = async (): Promise<Country[]> => {
     return response.data;
   } catch (error) {
     console.error("Error fetching countries:", error);
-    throw error; 
+    throw error;
   }
 };
 
@@ -33,7 +33,10 @@ export const addCountry = async (country: Country): Promise<Country> => {
 
 export const updateCountry = async (country: Country): Promise<Country> => {
   try {
-    const response = await axiosInstance.put(`/countries/${country.id}`, country);
+    const response = await axiosInstance.put(
+      `/countries/${country.id}`,
+      country,
+    );
     return response.data;
   } catch (error) {
     console.error(`Error updating country with ID ${country.id}:`, error);

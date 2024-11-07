@@ -49,7 +49,7 @@ const EditCountryForm: React.FC<EditCountryFormProps> = ({
         const base64Image = await convertToBase64(file);
         setFormData((prevData) => ({
           ...prevData,
-          image: base64Image, 
+          image: base64Image,
         }));
       } catch (error: unknown) {
         if (error instanceof Error) {
@@ -63,7 +63,7 @@ const EditCountryForm: React.FC<EditCountryFormProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSave(formData); 
+    onSave(formData);
   };
 
   return (

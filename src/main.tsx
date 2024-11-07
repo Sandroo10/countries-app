@@ -10,7 +10,7 @@ const queryClient = new QueryClient();
 if (rootElement) {
   createRoot(rootElement).render(
     <QueryClientProvider client={queryClient}>
-    <App />
-    </QueryClientProvider>
+      <App />
+    </QueryClientProvider>,
   );
 }

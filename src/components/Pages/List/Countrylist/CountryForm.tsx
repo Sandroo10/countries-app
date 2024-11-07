@@ -4,7 +4,6 @@ import styles from "./List.module.css";
 import { translations } from "@/data/translations";
 import { useParams } from "react-router-dom";
 
-
 type CountryFormProps = {
   onAddCountry: (country: Country) => void;
 };
@@ -135,8 +134,6 @@ const CountryForm: React.FC<CountryFormProps> = ({ onAddCountry }) => {
       nameGeorgian: newCountry.nameGeorgian,
       capitalGeorgian: newCountry.capitalGeorgian,
     };
-
-    
 
     onAddCountry(newCountryData);
     setNewCountry({

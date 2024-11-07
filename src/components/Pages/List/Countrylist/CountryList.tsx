@@ -8,7 +8,12 @@ import { Country } from "@/data/Countries";
 import CountryCard from "./CountryCard";
 import { translations } from "@/data/translations";
 import styles from "./List.module.css";
-import { fetchCountries, addCountry, deleteCountry, updateCountry } from "@/api/countryApi";
+import {
+  fetchCountries,
+  addCountry,
+  deleteCountry,
+  updateCountry,
+} from "@/api/countryApi";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 const CountryList: React.FC = () => {
@@ -19,16 +24,14 @@ const CountryList: React.FC = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [editingCountry, setEditingCountry] = useState<Country | null>(null);
 
-
   const { isLoading, isError } = useQuery<Country[], Error>({
     queryKey: ["countries"],
     queryFn: async () => {
       const fetchedCountries: Country[] = await fetchCountries();
       dispatch({ type: "INITIALIZE_COUNTRIES", countries: fetchedCountries });
       return fetchedCountries;
-    }
+    },
   });
-  
 
   const addCountryMutation = useMutation({
     mutationFn: addCountry,
@@ -55,7 +58,10 @@ const CountryList: React.FC = () => {
     },
   });
 
-  const sortedCountries = useSortedCountries(state.countries, state.sortByLikes);
+  const sortedCountries = useSortedCountries(
+    state.countries,
+    state.sortByLikes,
+  );
 
   const handleAddCountry = (country: Country) => {
     addCountryMutation.mutate(country);
@@ -99,8 +105,14 @@ const CountryList: React.FC = () => {
           onCancel={handleCancelEdit}
         />
       )}
-      <button onClick={toggleSortByLikes} className={styles.sortButton} disabled={isLoading}>
-        {state.sortByLikes === "asc" ? t.countryCards.sortByLikesDesc : t.countryCards.sortByLikesAsc}
+      <button
+        onClick={toggleSortByLikes}
+        className={styles.sortButton}
+        disabled={isLoading}
+      >
+        {state.sortByLikes === "asc"
+          ? t.countryCards.sortByLikesDesc
+          : t.countryCards.sortByLikesAsc}
       </button>
       <div className={styles.countriesGrid}>
         {sortedCountries.map((country) => (
