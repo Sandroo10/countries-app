@@ -16,18 +16,18 @@ const CountryPage: React.FC = () => {
   const { id = "", lang = "en" } = useParams<{ id: string; lang: string }>();
 
   const {
-    data: country,
+    data,
     isLoading,
     error,
   } = useQuery<Country | null>({
-    queryKey: ["country", id],
+    queryKey: [id],
     queryFn: () => fetchCountryById(id),
     refetchOnWindowFocus: false,
     retry: 1,
   });
 
   if (isLoading) return <p>Loading...</p>;
-  if (error || !country) return <Navigate to="*" />;
+  if (error || !data) return <Navigate to="*" />;
 
   const t = translations[lang as keyof typeof translations] || translations.en;
   const countryTranslations = t.countries[id as keyof typeof t.countries];
@@ -36,17 +36,17 @@ const CountryPage: React.FC = () => {
     <div className={styles.countryPage}>
       <div className={styles.imagesContainer}>
         <img
-          src={country.images?.[0] || ""}
+          src={data.images?.[0] || ""}
           alt={`${countryTranslations.name} view 1`}
           className={styles.imageLeft}
         />
         <img
-          src={country.images?.[1] || ""}
+          src={data.images?.[1] || ""}
           alt={`${countryTranslations.name} view 2`}
           className={styles.imageCenter}
         />
         <img
-          src={country.images?.[2] || ""}
+          src={data.images?.[2] || ""}
           alt={`${countryTranslations.name} view 3`}
           className={styles.imageRight}
         />
