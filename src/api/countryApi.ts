@@ -4,13 +4,14 @@ import { Country } from "@/data/Countries";
 export const fetchCountries = async (
   sortOrder: "asc" | "desc" | null,
   page: number,
-  limit: number
+  limit: number,
 ): Promise<{ countries: Country[]; totalCount: number }> => {
   try {
     const offset = (page - 1) * limit;
     const sortParam = sortOrder ? `&_sort=likes&_order=${sortOrder}` : "";
-    const response = await axiosInstance.get<Country[]>(`/countries?_start=${offset}&_limit=${limit}${sortParam}`);
-    
+    const response = await axiosInstance.get<Country[]>(
+      `/countries?_start=${offset}&_limit=${limit}${sortParam}`,
+    );
 
     const totalCount = parseInt(response.headers["x-total-count"], 10);
     if (isNaN(totalCount)) {
@@ -21,7 +22,7 @@ export const fetchCountries = async (
       };
     }
     return {
-      countries:response.data,
+      countries: response.data,
       totalCount,
     };
   } catch (error) {
@@ -30,10 +31,11 @@ export const fetchCountries = async (
   }
 };
 
-
 export const fetchCountryById = async (id: string): Promise<Country | null> => {
   try {
-    const response = await axiosInstance.get<Country | null>(`/countries/${id}`);
+    const response = await axiosInstance.get<Country | null>(
+      `/countries/${id}`,
+    );
     return response.data;
   } catch (error) {
     console.error(`Error fetching country with ID ${id}:`, error);
@@ -53,7 +55,10 @@ export const addCountry = async (country: Country): Promise<Country> => {
 
 export const updateCountry = async (country: Country): Promise<Country> => {
   try {
-    const response = await axiosInstance.put<Country>(`/countries/${country.id}`, country);
+    const response = await axiosInstance.put<Country>(
+      `/countries/${country.id}`,
+      country,
+    );
     return response.data;
   } catch (error) {
     console.error(`Error updating country with ID ${country.id}:`, error);
@@ -69,12 +74,20 @@ export const deleteCountry = async (id: string): Promise<void> => {
     throw error;
   }
 };
-export const updateCountryLikes = async (country: Country): Promise<Country> => {
+export const updateCountryLikes = async (
+  country: Country,
+): Promise<Country> => {
   try {
-    const response = await axiosInstance.put<Country>(`/countries/${country.id}`, country);
+    const response = await axiosInstance.put<Country>(
+      `/countries/${country.id}`,
+      country,
+    );
     return response.data;
   } catch (error) {
-    console.error(`Error updating likes for country with ID ${country.id}:`, error);
+    console.error(
+      `Error updating likes for country with ID ${country.id}:`,
+      error,
+    );
     throw error;
   }
 };

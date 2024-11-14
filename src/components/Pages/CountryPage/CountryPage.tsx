@@ -15,11 +15,7 @@ type Country = {
 const CountryPage: React.FC = () => {
   const { id = "", lang = "en" } = useParams<{ id: string; lang: string }>();
 
-  const {
-    data,
-    isLoading,
-    error,
-  } = useQuery<Country | null>({
+  const { data, isLoading, error } = useQuery<Country | null>({
     queryKey: [id],
     queryFn: () => fetchCountryById(id),
     refetchOnWindowFocus: false,

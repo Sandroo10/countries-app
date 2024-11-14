@@ -15,7 +15,7 @@ import {
   deleteCountry,
   updateCountry,
 } from "@/api/countryApi";
-import { useQuery, useMutation, useQueryClient, } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Pagination from "./Pagination";
 
 const CountryList: React.FC = () => {
@@ -48,9 +48,7 @@ const CountryList: React.FC = () => {
       return response;
     },
   });
-  
-  
-  
+
   useEffect(() => {
     if (data?.countries) {
       setTimeout(() => {
@@ -58,7 +56,6 @@ const CountryList: React.FC = () => {
       }, 0);
     }
   }, [data, dispatch]);
-  
 
   const virtualizer = useVirtualizer({
     count: data?.countries.length || 0,
@@ -128,19 +125,19 @@ const CountryList: React.FC = () => {
       state.sortByLikes === "asc"
         ? "desc"
         : state.sortByLikes === "desc"
-        ? null
-        : "asc";
-  
+          ? null
+          : "asc";
+
     dispatch({ type: "SET_SORT_ORDER", sortOrder: newSortOrder });
-  
+
     // Invalidate query to refetch with new sort order
-    queryClient.invalidateQueries({ queryKey: ["countries", newSortOrder, page] });
-  
+    queryClient.invalidateQueries({
+      queryKey: ["countries", newSortOrder, page],
+    });
+
     // Update search params
     setSearchParams({ sort: newSortOrder || "", page: String(page) });
   };
-  
-  
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
@@ -169,8 +166,8 @@ const CountryList: React.FC = () => {
         {state.sortByLikes === "asc"
           ? t.countryCards.sortByLikesDesc
           : state.sortByLikes === "desc"
-          ? t.countryCards.clearSort
-          : t.countryCards.sortByLikesAsc}
+            ? t.countryCards.clearSort
+            : t.countryCards.sortByLikesAsc}
       </button>
       <div
         ref={parentRef}

@@ -8,7 +8,7 @@ type Action =
   | { type: "DELETE_COUNTRY"; id: string }
   | { type: "RESTORE_COUNTRY"; id: string }
   | { type: "EDIT_COUNTRY"; country: Country }
-  | { type: "SET_SORT_ORDER";sortOrder: "asc" | "desc" | null };
+  | { type: "SET_SORT_ORDER"; sortOrder: "asc" | "desc" | null };
 type State = {
   countries: Country[];
   sortByLikes: "asc" | "desc" | null;
@@ -39,11 +39,11 @@ export const reducer = (state: State, action: Action): State => {
       return { ...state, sortByLikes: newSortByLikes };
     }
     // In useCountriesReducer.ts
-case "SET_SORT_ORDER":
-  return {
-    ...state,
-    sortByLikes: action.sortOrder,
-  };
+    case "SET_SORT_ORDER":
+      return {
+        ...state,
+        sortByLikes: action.sortOrder,
+      };
 
     case "DELETE_COUNTRY": {
       const updatedCountries = state.countries.filter(

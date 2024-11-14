@@ -1,13 +1,17 @@
-import React from 'react';
-import styles from './Pagination.module.css'; 
+import React from "react";
+import styles from "./Pagination.module.css";
 
 interface PaginationProps {
   currentPage: number;
   onPageChange: (page: number) => void;
-  totalPages: number; 
+  totalPages: number;
 }
 
-const Pagination: React.FC<PaginationProps> = ({ currentPage, onPageChange, totalPages }) => {
+const Pagination: React.FC<PaginationProps> = ({
+  currentPage,
+  onPageChange,
+  totalPages,
+}) => {
   const handlePrevious = () => {
     if (currentPage > 1) {
       onPageChange(currentPage - 1);
@@ -22,7 +26,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, onPageChange, tota
 
   return (
     <div className={styles.pagination}>
-      <button 
+      <button
         onClick={handlePrevious}
         disabled={currentPage === 1}
         className={styles.arrowButton}
@@ -42,6 +46,5 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, onPageChange, tota
     </div>
   );
 };
-
 
 export default Pagination;
