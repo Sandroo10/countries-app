@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Footer.module.css";
 import facebookIcon from "@/assets/facebook.png";
-import instagramIcon from "@/assets/instagram.webp";
+
 
 const Footer: React.FC = () => {
   return (
@@ -29,7 +29,7 @@ const Footer: React.FC = () => {
           aria-label="Instagram"
         >
           <img
-            src={instagramIcon}
+            src={facebookIcon}
             alt="Instagram"
             className={styles.socialIcon}
           />
