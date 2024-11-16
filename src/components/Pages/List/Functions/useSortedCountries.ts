@@ -2,13 +2,13 @@ import { Country } from "@/data/Countries";
 
 export const useSortedCountries = (
   countries: Country[],
-  sortByLikes: "asc" | "desc" | null,
+  sortByLikes: "likes" | "-likes" | null,
 ): Country[] => {
   let sortedCountries = countries;
 
-  if (sortByLikes === "asc") {
+  if (sortByLikes === "likes") {
     sortedCountries = [...countries].sort((a, b) => a.likes - b.likes);
-  } else if (sortByLikes === "desc") {
+  } else if (sortByLikes === "-likes") {
     sortedCountries = [...countries].sort((a, b) => b.likes - a.likes);
   }
 

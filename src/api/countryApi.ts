@@ -2,13 +2,13 @@ import axiosInstance from "./axiosInstance";
 import { Country } from "@/data/Countries";
 
 export const fetchCountries = async (
-  sortOrder: "asc" | "desc" | null,
+  sortOrder: "likes" | "-likes" | null,
   page: number,
   limit: number,
 ): Promise<{ countries: Country[]; totalCount: number }> => {
   try {
     const offset = (page - 1) * limit;
-    const sortParam = sortOrder ? `&_sort=likes&_order=${sortOrder}` : "";
+    const sortParam = sortOrder ? `&_sort=${sortOrder}` : "";
     const response = await axiosInstance.get<Country[]>(
       `/countries?_start=${offset}&_limit=${limit}${sortParam}`,
     );

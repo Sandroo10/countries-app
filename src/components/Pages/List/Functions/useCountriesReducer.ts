@@ -8,10 +8,10 @@ type Action =
   | { type: "DELETE_COUNTRY"; id: string }
   | { type: "RESTORE_COUNTRY"; id: string }
   | { type: "EDIT_COUNTRY"; country: Country }
-  | { type: "SET_SORT_ORDER"; sortOrder: "asc" | "desc" | null };
+  | { type: "SET_SORT_ORDER"; sortOrder: "likes" | "-likes" | null };
 type State = {
   countries: Country[];
-  sortByLikes: "asc" | "desc" | null;
+  sortByLikes: "likes" | "-likes" | null;
 };
 
 export const reducer = (state: State, action: Action): State => {
@@ -28,11 +28,11 @@ export const reducer = (state: State, action: Action): State => {
         ),
       };
     case "TOGGLE_SORT_BY_LIKES": {
-      let newSortByLikes: "asc" | "desc" | null = state.sortByLikes;
+      let newSortByLikes: "likes" | "-likes" | null = state.sortByLikes;
       if (!state.sortByLikes) {
-        newSortByLikes = "asc";
-      } else if (state.sortByLikes === "asc") {
-        newSortByLikes = "desc";
+        newSortByLikes = "likes";
+      } else if (state.sortByLikes === "likes") {
+        newSortByLikes = "-likes";
       } else {
         newSortByLikes = null;
       }

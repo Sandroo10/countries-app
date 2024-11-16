@@ -1,7 +1,6 @@
 import React, { useReducer, useState, useRef, useEffect } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { reducer, initialState } from "../Functions/useCountriesReducer";
-import { useSortedCountries } from "../Functions/useSortedCountries";
 import CountryForm from "./CountryForm";
 import EditCountryForm from "./EditCountryform";
 import { Country } from "@/data/Countries";
@@ -9,14 +8,8 @@ import CountryCard from "./CountryCard";
 import { translations } from "@/data/translations";
 import styles from "./List.module.css";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import {
-  fetchCountries,
-  addCountry,
-  deleteCountry,
-  updateCountry,
-} from "@/api/countryApi";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import Pagination from "./Pagination";
+import { fetchCountries, addCountry, deleteCountry, updateCountry } from "@/api/countryApi";
+import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 const CountryList: React.FC = () => {
   const parentRef = useRef<HTMLDivElement>(null);
@@ -26,43 +19,95 @@ const CountryList: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const initialSort = searchParams.get("sort") || null;
-  const initialPage = Number(searchParams.get("page")) || 1;
+  
 
   const [state, dispatch] = useReducer(reducer, {
     ...initialState,
-    sortByLikes: initialSort as "asc" | "desc" | null,
+    sortByLikes: initialSort as "likes" | "-likes" | null,
   });
   const [editingCountry, setEditingCountry] = useState<Country | null>(null);
-  const [page, setPage] = useState(initialPage);
   const limit = 10;
-
-  const sortedCountries = useSortedCountries(
-    state.countries,
-    state.sortByLikes,
-  );
-
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["countries", state.sortByLikes, page],
-    queryFn: async () => {
-      const response = await fetchCountries(state.sortByLikes, page, limit);
-      return response;
+  const sortByLikes = state.sortByLikes;
+  const {
+    data,
+    isLoading,
+    isError,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    queryKey: ["countries", state.sortByLikes],
+    queryFn: async ({ pageParam = 1 }) => {
+      const response = await fetchCountries(state.sortByLikes, pageParam, limit);
+      return {
+        countries: response.countries,
+        nextPage: pageParam + 1,
+        totalCount: response.totalCount,
+      };
     },
+    getNextPageParam: (lastPage) => {
+      const totalPages = Math.ceil(lastPage.totalCount / limit);
+      return lastPage.nextPage <= totalPages ? lastPage.nextPage : undefined;
+    },
+    initialPageParam: 1,
   });
+  
+  
 
   useEffect(() => {
-    if (data?.countries) {
-      setTimeout(() => {
-        dispatch({ type: "INITIALIZE_COUNTRIES", countries: data.countries });
-      }, 0);
+    if (data?.pages) {
+      const allCountries = data.pages.flatMap((page) => page.countries);
+      dispatch({ type: "INITIALIZE_COUNTRIES", countries: allCountries });
     }
-  }, [data, dispatch]);
+  }, [data]);
 
   const virtualizer = useVirtualizer({
-    count: data?.countries.length || 0,
+    count: data?.pages.flatMap((page) => page.countries).length || 0,
     getScrollElement: () => parentRef.current,
     estimateSize: () => 100,
     overscan: 10,
   });
+  useEffect(() => {
+    const onScroll = () => {
+      if (
+        parentRef.current &&
+        parentRef.current.scrollHeight - parentRef.current.scrollTop <=
+          parentRef.current.clientHeight + 100
+      ) {
+        if (hasNextPage) {
+          fetchNextPage();
+        }
+      }
+    };
+  
+    const scrollContainer = parentRef.current;
+    scrollContainer?.addEventListener("scroll", onScroll);
+  
+    return () => scrollContainer?.removeEventListener("scroll", onScroll);
+  }, [fetchNextPage, hasNextPage]);
+  
+
+  useEffect(() => {
+    virtualizer.scrollToIndex(0);
+    const [lastItem] = [...virtualizer.getVirtualItems()].reverse();
+  
+    if (
+      lastItem &&
+      lastItem.index >= state.countries.length - 1 &&
+      hasNextPage &&
+      !isFetchingNextPage
+    ) {
+      fetchNextPage();
+    }
+  }, [
+    sortByLikes, 
+    virtualizer, 
+    fetchNextPage, 
+    hasNextPage, 
+    isFetchingNextPage, 
+    state.countries.length, 
+  ]);
+  
 
   const addCountryMutation = useMutation({
     mutationFn: addCountry,
@@ -89,63 +134,33 @@ const CountryList: React.FC = () => {
     },
   });
 
-  const handleAddCountry = (country: Country) => {
-    addCountryMutation.mutate(country);
-  };
+  const handleAddCountry = (country: Country) => addCountryMutation.mutate(country);
 
-  const handleLike = (id: string) => {
-    dispatch({ type: "LIKE_COUNTRY", id });
-  };
+  const handleLike = (id: string) => dispatch({ type: "LIKE_COUNTRY", id });
 
-  const handleDeleteCountry = (id: string) => {
-    deleteCountryMutation.mutate(id);
-  };
+  const handleDeleteCountry = (id: string) => deleteCountryMutation.mutate(id);
 
-  const handleEditCountry = (country: Country) => {
-    setEditingCountry(country);
-  };
+  const handleEditCountry = (country: Country) => setEditingCountry(country);
 
-  const handleSaveEdit = (updatedCountry: Country) => {
-    updateCountryMutation.mutate(updatedCountry);
-  };
+  const handleSaveEdit = (updatedCountry: Country) => updateCountryMutation.mutate(updatedCountry);
 
-  const handleCancelEdit = () => {
-    setEditingCountry(null);
-  };
-
-  useEffect(() => {
-    setSearchParams({
-      sort: state.sortByLikes || "",
-      page: String(page),
-    });
-  }, [state.sortByLikes, page, setSearchParams]);
+  const handleCancelEdit = () => setEditingCountry(null);
 
   const toggleSortByLikes = () => {
     const newSortOrder =
-      state.sortByLikes === "asc"
-        ? "desc"
-        : state.sortByLikes === "desc"
-          ? null
-          : "asc";
+      state.sortByLikes === "likes"
+        ? "-likes"
+        : state.sortByLikes === "-likes"
+        ? null
+        : "likes";
 
     dispatch({ type: "SET_SORT_ORDER", sortOrder: newSortOrder });
-
-    // Invalidate query to refetch with new sort order
-    queryClient.invalidateQueries({
-      queryKey: ["countries", newSortOrder, page],
-    });
-
-    // Update search params
-    setSearchParams({ sort: newSortOrder || "", page: String(page) });
-  };
-
-  const handlePageChange = (newPage: number) => {
-    setPage(newPage);
+    queryClient.invalidateQueries({ queryKey: ["countries"] });
+    setSearchParams({ sort: newSortOrder || "" });
   };
 
   if (isLoading) return <p>Loading countries...</p>;
   if (isError) return <p>Error fetching countries.</p>;
-  const totalPages = Math.ceil((data?.totalCount || 0) / limit);
 
   return (
     <div className={styles.container}>
@@ -163,11 +178,11 @@ const CountryList: React.FC = () => {
         className={styles.sortButton}
         disabled={isLoading}
       >
-        {state.sortByLikes === "asc"
+        {state.sortByLikes === "likes"
           ? t.countryCards.sortByLikesDesc
-          : state.sortByLikes === "desc"
-            ? t.countryCards.clearSort
-            : t.countryCards.sortByLikesAsc}
+          : state.sortByLikes === "-likes"
+          ? t.countryCards.clearSort
+          : t.countryCards.sortByLikesAsc}
       </button>
       <div
         ref={parentRef}
@@ -185,7 +200,7 @@ const CountryList: React.FC = () => {
           }}
         >
           {virtualizer.getVirtualItems().map((virtualRow) => {
-            const country = sortedCountries[virtualRow.index];
+            const country = state.countries[virtualRow.index];
             if (!country) return null;
             const gap = 10;
             return (
@@ -196,7 +211,7 @@ const CountryList: React.FC = () => {
                   top: virtualRow.start + virtualRow.index * gap,
                   left: 0,
                   width: "90%",
-                  transform: `translateY(${virtualRow.start}px)`,
+                  transform: `translateY(${virtualRow.start}px)`
                 }}
                 className={styles.countryItem}
               >
@@ -211,11 +226,6 @@ const CountryList: React.FC = () => {
           })}
         </div>
       </div>
-      <Pagination
-        currentPage={page}
-        onPageChange={handlePageChange}
-        totalPages={totalPages}
-      />
     </div>
   );
 };
