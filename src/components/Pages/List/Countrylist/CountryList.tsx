@@ -8,8 +8,17 @@ import CountryCard from "./CountryCard";
 import { translations } from "@/data/translations";
 import styles from "./List.module.css";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { fetchCountries, addCountry, deleteCountry, updateCountry } from "@/api/countryApi";
-import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  fetchCountries,
+  addCountry,
+  deleteCountry,
+  updateCountry,
+} from "@/api/countryApi";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 const CountryList: React.FC = () => {
   const parentRef = useRef<HTMLDivElement>(null);
@@ -19,7 +28,6 @@ const CountryList: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const initialSort = searchParams.get("sort") || null;
-  
 
   const [state, dispatch] = useReducer(reducer, {
     ...initialState,
@@ -38,7 +46,11 @@ const CountryList: React.FC = () => {
   } = useInfiniteQuery({
     queryKey: ["countries", state.sortByLikes],
     queryFn: async ({ pageParam = 1 }) => {
-      const response = await fetchCountries(state.sortByLikes, pageParam, limit);
+      const response = await fetchCountries(
+        state.sortByLikes,
+        pageParam,
+        limit,
+      );
       return {
         countries: response.countries,
         nextPage: pageParam + 1,
@@ -51,8 +63,6 @@ const CountryList: React.FC = () => {
     },
     initialPageParam: 1,
   });
-  
-  
 
   useEffect(() => {
     if (data?.pages) {
@@ -79,18 +89,17 @@ const CountryList: React.FC = () => {
         }
       }
     };
-  
+
     const scrollContainer = parentRef.current;
     scrollContainer?.addEventListener("scroll", onScroll);
-  
+
     return () => scrollContainer?.removeEventListener("scroll", onScroll);
   }, [fetchNextPage, hasNextPage]);
-  
 
   useEffect(() => {
     virtualizer.scrollToIndex(0);
     const [lastItem] = [...virtualizer.getVirtualItems()].reverse();
-  
+
     if (
       lastItem &&
       lastItem.index >= state.countries.length - 1 &&
@@ -100,14 +109,13 @@ const CountryList: React.FC = () => {
       fetchNextPage();
     }
   }, [
-    sortByLikes, 
-    virtualizer, 
-    fetchNextPage, 
-    hasNextPage, 
-    isFetchingNextPage, 
-    state.countries.length, 
+    sortByLikes,
+    virtualizer,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    state.countries.length,
   ]);
-  
 
   const addCountryMutation = useMutation({
     mutationFn: addCountry,
@@ -134,7 +142,8 @@ const CountryList: React.FC = () => {
     },
   });
 
-  const handleAddCountry = (country: Country) => addCountryMutation.mutate(country);
+  const handleAddCountry = (country: Country) =>
+    addCountryMutation.mutate(country);
 
   const handleLike = (id: string) => dispatch({ type: "LIKE_COUNTRY", id });
 
@@ -142,7 +151,8 @@ const CountryList: React.FC = () => {
 
   const handleEditCountry = (country: Country) => setEditingCountry(country);
 
-  const handleSaveEdit = (updatedCountry: Country) => updateCountryMutation.mutate(updatedCountry);
+  const handleSaveEdit = (updatedCountry: Country) =>
+    updateCountryMutation.mutate(updatedCountry);
 
   const handleCancelEdit = () => setEditingCountry(null);
 
@@ -151,8 +161,8 @@ const CountryList: React.FC = () => {
       state.sortByLikes === "likes"
         ? "-likes"
         : state.sortByLikes === "-likes"
-        ? null
-        : "likes";
+          ? null
+          : "likes";
 
     dispatch({ type: "SET_SORT_ORDER", sortOrder: newSortOrder });
     queryClient.invalidateQueries({ queryKey: ["countries"] });
@@ -181,8 +191,8 @@ const CountryList: React.FC = () => {
         {state.sortByLikes === "likes"
           ? t.countryCards.sortByLikesDesc
           : state.sortByLikes === "-likes"
-          ? t.countryCards.clearSort
-          : t.countryCards.sortByLikesAsc}
+            ? t.countryCards.clearSort
+            : t.countryCards.sortByLikesAsc}
       </button>
       <div
         ref={parentRef}
@@ -211,7 +221,7 @@ const CountryList: React.FC = () => {
                   top: virtualRow.start + virtualRow.index * gap,
                   left: 0,
                   width: "90%",
-                  transform: `translateY(${virtualRow.start}px)`
+                  transform: `translateY(${virtualRow.start}px)`,
                 }}
                 className={styles.countryItem}
               >
