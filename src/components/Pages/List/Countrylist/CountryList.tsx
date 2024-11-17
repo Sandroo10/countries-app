@@ -7,7 +7,7 @@ import { Country } from "@/data/Countries";
 import CountryCard from "./CountryCard";
 import { translations } from "@/data/translations";
 import styles from "./List.module.css";
-import { useVirtualizer } from "@tanstack/react-virtual";
+import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import {
   fetchCountries,
   addCountry,
@@ -71,33 +71,30 @@ const CountryList: React.FC = () => {
     }
   }, [data]);
 
-  const virtualizer = useVirtualizer({
+  const virtualizer = useWindowVirtualizer({
     count: data?.pages.flatMap((page) => page.countries).length || 0,
-    getScrollElement: () => parentRef.current,
-    estimateSize: () => 100,
+    estimateSize: () => 200,
     overscan: 10,
   });
+  
   useEffect(() => {
     const onScroll = () => {
       if (
-        parentRef.current &&
-        parentRef.current.scrollHeight - parentRef.current.scrollTop <=
-          parentRef.current.clientHeight + 100
+        window.innerHeight + window.scrollY >=
+        document.body.offsetHeight - 100
       ) {
         if (hasNextPage) {
           fetchNextPage();
         }
       }
     };
-
-    const scrollContainer = parentRef.current;
-    scrollContainer?.addEventListener("scroll", onScroll);
-
-    return () => scrollContainer?.removeEventListener("scroll", onScroll);
+  
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, [fetchNextPage, hasNextPage]);
+  
 
   useEffect(() => {
-    virtualizer.scrollToIndex(0);
     const [lastItem] = [...virtualizer.getVirtualItems()].reverse();
 
     if (
@@ -197,10 +194,6 @@ const CountryList: React.FC = () => {
       <div
         ref={parentRef}
         className={styles.countriesGrid}
-        style={{
-          height: "500px",
-          overflow: "auto",
-        }}
       >
         <div
           style={{
@@ -212,13 +205,12 @@ const CountryList: React.FC = () => {
           {virtualizer.getVirtualItems().map((virtualRow) => {
             const country = state.countries[virtualRow.index];
             if (!country) return null;
-            const gap = 10;
             return (
               <div
                 key={country.id}
                 style={{
                   position: "absolute",
-                  top: virtualRow.start + virtualRow.index * gap,
+                  top: 0,
                   left: 0,
                   width: "90%",
                   transform: `translateY(${virtualRow.start}px)`,
